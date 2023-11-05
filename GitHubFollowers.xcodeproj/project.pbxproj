@@ -14,6 +14,7 @@
 		7B4B7C912AEEA8D100B8B868 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B4B7C902AEEA8D100B8B868 /* Assets.xcassets */; };
 		7B4B7C942AEEA8D100B8B868 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B4B7C922AEEA8D100B8B868 /* LaunchScreen.storyboard */; };
 		7B8D67342AF7BC5300912388 /* GFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8D67332AF7BC5300912388 /* GFButton.swift */; };
+		7B8D67362AF7C4AD00912388 /* GFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8D67352AF7C4AD00912388 /* GFTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		7B4B7C932AEEA8D100B8B868 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B4B7C952AEEA8D100B8B868 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B8D67332AF7BC5300912388 /* GFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButton.swift; sourceTree = "<group>"; };
+		7B8D67352AF7C4AD00912388 /* GFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				7B30BB472AF29308004C06CE /* FavoritesListVC.swift */,
 				7B30BB452AF2920D004C06CE /* SearchVC.swift */,
 				7B8D67332AF7BC5300912388 /* GFButton.swift */,
+				7B8D67352AF7C4AD00912388 /* GFTextField.swift */,
 				7B4B7C902AEEA8D100B8B868 /* Assets.xcassets */,
 				7B4B7C922AEEA8D100B8B868 /* LaunchScreen.storyboard */,
 				7B4B7C952AEEA8D100B8B868 /* Info.plist */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B8D67362AF7C4AD00912388 /* GFTextField.swift in Sources */,
 				7B30BB462AF2920D004C06CE /* SearchVC.swift in Sources */,
 				7B8D67342AF7BC5300912388 /* GFButton.swift in Sources */,
 				7B4B7C882AEEA8D000B8B868 /* AppDelegate.swift in Sources */,
