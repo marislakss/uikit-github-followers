@@ -1,19 +1,15 @@
 //
-//  ViewController.swift
+//  SearchVC.swift
 //  GitHubFollowers
 //
-//  Created by Māris Lakšs on 29/10/2023.
+//  Created by Māris Lakšs on 01/11/2023.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemPink
     }
-
-
 }
-
