@@ -31,15 +31,15 @@ class GFTextField: UITextField {
         textAlignment             = .center
         // Use Dynamic Type
         font                      = UIFont.preferredFont(forTextStyle: .title2)
-
         adjustsFontSizeToFitWidth = true
         minimumFontSize           = 12
 
         backgroundColor           = .tertiarySystemBackground
-
         // Having different types of usernames turn off autocorrect for this text field
         autocorrectionType        = .no
-
+        // In case you would need to implement different types of keyboards use keyboardType
+        // keyboardType              = .numberPad
         placeholder               = "Enter a username"
+        returnKeyType             = .go
     }
 }

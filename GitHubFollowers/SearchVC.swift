@@ -12,6 +12,12 @@ class SearchVC: UIViewController {
     let usernameTextField = GFTextField()
     let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
 
+    // Computed property
+    var isUsernameEntered: Bool {
+        // Check if the text field is empty
+        return !usernameTextField.text!.isEmpty
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Adapt the view to the dark & light mode
@@ -19,12 +25,34 @@ class SearchVC: UIViewController {
         configureLogoImageView()
         configureTextField()
         configureCallToActionButton()
+        createDismissKeyboardTapGesture()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Hide the navigation bar
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    func createDismissKeyboardTapGesture() {
+        // Create a tap gesture recognizer
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        // Add the tap gesture recognizer to the overall view
+        // Tap anywhere on the screen to dismiss the keyboard
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func pushFollowerListVC() {
+        guard isUsernameEntered else {
+            print("No username")
+            return
+        }
+        let followerListVC      = FollowerListVC()
+        // Set the username
+        followerListVC.username = usernameTextField.text
+        followerListVC.title    = usernameTextField.text
+        // Push the view controller
+        navigationController?.pushViewController(followerListVC, animated: true)
     }
 
     func configureLogoImageView() {
@@ -49,6 +77,9 @@ class SearchVC: UIViewController {
 
     func configureTextField() {
         view.addSubview(usernameTextField)
+        // Set the delegate, so we can use the text field delegate methods
+        usernameTextField.delegate = self
+
         // Set the constraints programmatically
         // Most of times 4 constraints are needed
         NSLayoutConstraint.activate([
@@ -71,6 +102,13 @@ class SearchVC: UIViewController {
     func configureCallToActionButton() {
         // Add the button to the view, equivalent to drag and drop in the storyboard
         view.addSubview(callToActionButton)
+        // Add the target to the button
+        callToActionButton.addTarget(
+            self,
+            action: #selector(pushFollowerListVC),
+            for: .touchUpInside
+        )
+
         // Set the constraints programmatically
         // Most of times 4 constraints are needed
         NSLayoutConstraint.activate([
@@ -86,7 +124,15 @@ class SearchVC: UIViewController {
                 equalTo: view.trailingAnchor,
                 constant: -50 // Negative value for the trailing & bottom constraints
             ),
-            callToActionButton.heightAnchor.constraint(equalToConstant: 50)
+            callToActionButton.heightAnchor.constraint(equalToConstant: 50),
         ])
+    }
+}
+
+extension SearchVC: UITextFieldDelegate {
+    // This method is called when the user taps the return button on the keyboard
+    func textFieldShouldReturn(_: UITextField) -> Bool {
+        pushFollowerListVC()
+        return true
     }
 }
