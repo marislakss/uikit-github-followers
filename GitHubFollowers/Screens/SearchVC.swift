@@ -58,6 +58,8 @@ class SearchVC: UIViewController {
         followerListVC.title    = usernameTextField.text
         // Push the view controller
         navigationController?.pushViewController(followerListVC, animated: true)
+        // Dismiss the keyboard
+        self.view.endEditing(true)
     }
 
     func configureLogoImageView() {

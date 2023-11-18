@@ -41,5 +41,7 @@ class GFTextField: UITextField {
         // keyboardType              = .numberPad
         placeholder               = "Enter a username"
         returnKeyType             = .go
+        // Add a clear button to the text field
+        clearButtonMode           = .whileEditing
     }
 }
