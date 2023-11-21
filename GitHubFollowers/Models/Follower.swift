@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Followers: Codable, Hashable {
+struct Follower: Codable, Hashable {
     let login: String
     // You can replace avatar_url with camel case avatarUrl
     let avatarUrl: String
