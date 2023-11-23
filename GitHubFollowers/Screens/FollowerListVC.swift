@@ -15,14 +15,20 @@ class FollowerListVC: UIViewController {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        NetworkManager.shared.getFollowers(for: username, page: 1) { followers, errorMessage in
-            guard let followers = followers else {
-                self.presentGFAlertOnMainThread(title: "Bad Stuff Happened", message: errorMessage!.rawValue, buttonTitle: "OK")
-                return
+        // This is called 'call site' in Swift
+        NetworkManager.shared.getFollowers(for: username, page: 1) { result in
+            switch result {
+                // In case success, we get an array of followers
+            case let .success(followers):
+                print(followers)
+            // In case failure, present the alert
+            case let .failure(error):
+                self.presentGFAlertOnMainThread(
+                    title: "Bad Stuff Happened",
+                    message: error.rawValue,
+                    buttonTitle: "OK"
+                )
             }
-
-            print("Followers.count = \(followers.count)")
-            print(followers)
         }
     }
 
