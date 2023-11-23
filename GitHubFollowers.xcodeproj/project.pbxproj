@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B1DCCDC2B0FC78E003EDB3E /* GFErrorMsg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DCCDB2B0FC78E003EDB3E /* GFErrorMsg.swift */; };
 		7B30BB462AF2920D004C06CE /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30BB452AF2920D004C06CE /* SearchVC.swift */; };
 		7B30BB482AF29308004C06CE /* FavoritesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B30BB472AF29308004C06CE /* FavoritesListVC.swift */; };
 		7B4B7C882AEEA8D000B8B868 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4B7C872AEEA8D000B8B868 /* AppDelegate.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B1DCCDB2B0FC78E003EDB3E /* GFErrorMsg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFErrorMsg.swift; sourceTree = "<group>"; };
 		7B30BB452AF2920D004C06CE /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		7B30BB472AF29308004C06CE /* FavoritesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListVC.swift; sourceTree = "<group>"; };
 		7B4B7C842AEEA8D000B8B868 /* GitHubFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B1DCCDA2B0FC69E003EDB3E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7B1DCCDB2B0FC78E003EDB3E /* GFErrorMsg.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		7B4B7C7B2AEEA8D000B8B868 = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +88,7 @@
 		7B4B7C862AEEA8D000B8B868 /* GitHubFollowers */ = {
 			isa = PBXGroup;
 			children = (
+				7B1DCCDA2B0FC69E003EDB3E /* Utilities */,
 				7BC71AAA2B0D16DC00C969C0 /* Managers */,
 				7BF289A02B09209A00364C55 /* Models */,
 				7B5169892B07EAE600A49810 /* Custom Views */,
@@ -230,6 +241,7 @@
 				7BF0496B2AFAA1AE00C162B1 /* GFTitleLabel.swift in Sources */,
 				7B848EED2AF961560083D8C6 /* FollowerListVC.swift in Sources */,
 				7B30BB482AF29308004C06CE /* FavoritesListVC.swift in Sources */,
+				7B1DCCDC2B0FC78E003EDB3E /* GFErrorMsg.swift in Sources */,
 				7BC71AAC2B0D170D00C969C0 /* NetworkManager.swift in Sources */,
 				7B4B7C8A2AEEA8D000B8B868 /* SceneDelegate.swift in Sources */,
 				7B5169852B07B42E00A49810 /* GFAlertContainerView.swift in Sources */,
