@@ -72,7 +72,19 @@ class FollowerListVC: UIViewController {
                 case let .success(followers):
                     if followers.count < 100 { self.hasMoreFollowers = false }
                     self.followers.append(contentsOf: followers)
+
+                    // In case the user doesn't have any followers, show the empty state view
+                    if self.followers.isEmpty {
+                        let message = "This user doesn't have any followers. Go follow them 😃."
+                        // When presenting a view, remember to switch to main thread
+                        // Reason is that this is done on background thread by default
+                        DispatchQueue.main.async {
+                            self.showEmptyStateView(with: message, in: self.view)
+                        }
+                        return
+                    }
                     self.updateData()
+
                 // In case failure, present the alert
                 case let .failure(error):
                     self.presentGFAlertOnMainThread(
