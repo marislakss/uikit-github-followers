@@ -55,6 +55,8 @@ class FollowerListVC: UIViewController {
     }
 
     func getFollowers(username: String, page: Int) {
+        // Show the loading view
+        showLoadingView()
         // This is called 'call site' in Swift
         NetworkManager.shared
             .getFollowers(for: username, page: page) { [weak self] result in
@@ -62,9 +64,12 @@ class FollowerListVC: UIViewController {
                 // Unwrap self, as using [weak self] makes it an optional
                 guard let self else { return }
 
+                // Dismiss the loading view
+                self.dismissLoadingView()
+
                 switch result {
                 // In case success, we get an array of followers
-                case .success(let followers):
+                case let .success(followers):
                     if followers.count < 100 { self.hasMoreFollowers = false }
                     self.followers.append(contentsOf: followers)
                     self.updateData()
@@ -111,7 +116,6 @@ class FollowerListVC: UIViewController {
 }
 
 extension FollowerListVC: UICollectionViewDelegate {
-    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate _: Bool) {
         // Get the content offset
         let offsetY = scrollView.contentOffset.y
