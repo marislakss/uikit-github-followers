@@ -11,9 +11,9 @@ struct User: Codable, Hashable {
     let login: String
     let avatarUrl: String
     // If some details on GitHub are optional, make sure to make them optional here as well.
-    let name: String?
-    let location: String?
-    let bio: String?
+    var name: String?
+    var location: String?
+    var bio: String?
     let publicRepos: Int
     let publicGists: Int
     let htmlUrl: String

@@ -23,7 +23,22 @@ class UserInfoVC: UIViewController {
         navigationItem.rightBarButtonItem = doneButton
         configureNavigationBar()
 
-        print(username ?? "No username")
+        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let user):
+                print(user)
+//                DispatchQueue.main.async {
+//                    self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.view)
+//                }
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(
+                    title: "Something went wrong",
+                    message: error.rawValue,
+                    buttonTitle: "OK"
+                )
+            }
+        }
     }
 
     @objc func dismissVC() {
