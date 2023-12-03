@@ -48,6 +48,7 @@ class NetworkManager {
                 let followers = try decoder.decode([Follower].self, from: data)
                 completed(.success(followers))
             } catch {
+                print("Error decoding User: \(error)")
                 completed(.failure(.invalidData))
             }
         }
