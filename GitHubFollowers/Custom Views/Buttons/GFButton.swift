@@ -12,7 +12,6 @@ class GFButton: UIButton {
         // super.init(frame: frame) calls the init of the parent class and obtain
         // all the properties of the parent class
         super.init(frame: frame)
-
         configure()
     }
 
@@ -23,7 +22,6 @@ class GFButton: UIButton {
 
     init(backgroundColor: UIColor, title: String) {
         super.init(frame: .zero)
-
         self.backgroundColor = backgroundColor
         setTitle(title, for: .normal)
         configure()
@@ -39,5 +37,10 @@ class GFButton: UIButton {
         titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         // Use auto layout
         translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    func set(backgroundColor: UIColor, title: String) {
+        self.backgroundColor = backgroundColor
+        setTitle(title, for: .normal)
     }
 }
