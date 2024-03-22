@@ -7,10 +7,6 @@
 
 import UIKit
 
-// protocol UserInfoVCDelegate: AnyObject {
-//    func didRequestFollowers(for username: String)
-// }
-
 protocol UserInfoVCDelegate: AnyObject {
     func didTapGitHubProfile(for user: User)
     func didTapGetFollowers(for user: User)

@@ -9,7 +9,6 @@ import UIKit
 
 protocol FollowerListVCDelegate: AnyObject {
     func didRequestFollowers(for username: String)
-//    func didTapGetFollowers(for user: User)
 }
 
 class FollowerListVC: UIViewController {
