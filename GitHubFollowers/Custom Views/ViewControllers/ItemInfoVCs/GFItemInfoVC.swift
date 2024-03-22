@@ -16,6 +16,10 @@ class GFItemInfoVC: UIViewController {
     let actionButton = GFButton()
 
     var user: User!
+    // Use weak on delegate to avoid retain cycles
+    // A retain cycle, also known as a circular reference, occurs when two or more objects 
+    // reference each other strongly, preventing them from being deallocated.
+    weak var delegate: UserInfoVCDelegate!
 
     // Custom initializer
     init(user: User) {
@@ -24,8 +28,8 @@ class GFItemInfoVC: UIViewController {
     }
 
     // Required initializer
-    required init?(coder: NSCoder) { 
-        fatalError("init(coder:) has not been implemented") 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -33,6 +37,7 @@ class GFItemInfoVC: UIViewController {
         configureBackgroundView()
         layoutUI()
         configureStackView()
+        configureActionButton()
     }
 
     func configureBackgroundView() {
@@ -47,6 +52,12 @@ class GFItemInfoVC: UIViewController {
         stackView.addArrangedSubview(itemInfoViewOne)
         stackView.addArrangedSubview(itemInfoViewTwo)
     }
+
+    private func configureActionButton() {
+        actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+    }
+
+    @objc func actionButtonTapped() {}
 
     private func layoutUI() {
         view.addSubview(stackView)

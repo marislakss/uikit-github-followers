@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol FollowerListVCDelegate: AnyObject {
+    func didRequestFollowers(for username: String)
+//    func didTapGetFollowers(for user: User)
+}
+
 class FollowerListVC: UIViewController {
     // Enums are hashable by default
     enum Section {
@@ -161,21 +166,21 @@ extension FollowerListVC: UICollectionViewDelegate {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // Initialize the active array
         //                  W (What)  ?    T (True)       : F (False)
         let activeArray = isSearching ? filteredFollowers : followers
         // Initialize the follower
         let follower = activeArray[indexPath.item]
-        // Initialize the userInfoVC
-        let userInfoVC = UserInfoVC()
-//        // Set the delegate
-//        userInfoVC.delegate = self
+        // Initialize the udestVC
+        let destVC = UserInfoVC()
+        // Set the delegate
+        destVC.delegate = self
         // Set the username
-        userInfoVC.username = follower.login
-        // Set the title
-        let navController = UINavigationController(rootViewController: userInfoVC)
-        // Present the userInfoVC
+        destVC.username = follower.login
+        // Initialize navController
+        let navController = UINavigationController(rootViewController: destVC)
+        // Present the destVC
         present(navController, animated: true)
     }
 }
@@ -196,8 +201,29 @@ extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
         updateData(on: filteredFollowers)
     }
 
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_: UISearchBar) {
         isSearching = false
         updateData(on: followers)
+    }
+}
+
+extension FollowerListVC: FollowerListVCDelegate {
+    func didRequestFollowers(for username: String) {
+        // Get followers for that user
+        self.username = username
+        title = username
+        page = 1
+        followers.removeAll()
+        filteredFollowers.removeAll()
+        collectionView.scrollsToTop = true
+
+        if isSearching {
+            navigationItem.searchController?.searchBar.text = ""
+            navigationItem.searchController?.isActive = false
+            navigationItem.searchController?.dismiss(animated: false)
+            isSearching = false
+        }
+
+        getFollowers(username: username, page: page)
     }
 }
