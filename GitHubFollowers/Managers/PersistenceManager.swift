@@ -30,7 +30,7 @@ enum PersistenceManager {
     ) {
         retrieveFavorites { result in
             switch result {
-            case let .success(favorites):
+            case .success(let favorites):
                 var retrievedFavorites = favorites
 
                 switch actionType {
@@ -52,7 +52,7 @@ enum PersistenceManager {
                 // Save updated list of favorites to UserDefaults
                 completed(save(favorites: retrievedFavorites))
 
-            case let .failure(error):
+            case .failure(let error):
                 completed(error)
             }
         }
