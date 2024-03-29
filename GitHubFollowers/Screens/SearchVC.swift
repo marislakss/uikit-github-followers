@@ -8,14 +8,15 @@
 import UIKit
 
 class SearchVC: UIViewController {
-    let logoImageView       = UIImageView()
-    let usernameTextField   = GFTextField()
-    let callToActionButton  = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
+    let logoImageView = UIImageView()
+    let usernameTextField = GFTextField()
+    let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
+    var logoImageViewTopConstraint: NSLayoutConstraint!
 
     // Computed property
     var isUsernameEntered: Bool {
         // Check if the text field is empty
-        return !usernameTextField.text!.isEmpty
+        !usernameTextField.text!.isEmpty
     }
 
     override func viewDidLoad() {
@@ -30,6 +31,7 @@ class SearchVC: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        usernameTextField.text = ""
         // Hide the navigation bar
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
@@ -51,29 +53,33 @@ class SearchVC: UIViewController {
             )
             return
         }
+        // Dismiss the keyboard
+        view.endEditing(true)
 
-        let followerListVC      = FollowerListVC()
-        // Set the username
-        followerListVC.username = usernameTextField.text
-        followerListVC.title    = usernameTextField.text
+        let followerListVC = FollowerListVC(username: usernameTextField.text!)
         // Push the view controller
         navigationController?.pushViewController(followerListVC, animated: true)
-        // Dismiss the keyboard
-        self.view.endEditing(true)
     }
 
     func configureLogoImageView() {
         view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         // Set the image
-        logoImageView.image = UIImage(named: "gh-logo")!
+        logoImageView.image = Images.ghLogo
+
+        let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes
+            .isiPhone8Zoomed ? 20 : 80
+
+        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: topConstraintConstant
+        )
+        logoImageViewTopConstraint.isActive = true
+        // Disable keyboard suggestions bar for usernameTextField
+        usernameTextField.spellCheckingType = .no
 
         // Using array set the constraints programmatically
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                constant: 80
-            ),
             // Center the image horizontally
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             // Set the width and height of the image
