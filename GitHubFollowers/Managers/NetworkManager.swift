@@ -56,7 +56,6 @@ class NetworkManager {
         task.resume()
     }
 
-
     func getUserInfo(
         for username: String,
         completed: @escaping (Result<User, GFError>) -> Void
@@ -87,6 +86,7 @@ class NetworkManager {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .iso8601
                 let user = try decoder.decode(User.self, from: data)
                 completed(.success(user))
             } catch {
@@ -94,6 +94,43 @@ class NetworkManager {
             }
         }
         // Start Network Call
+        task.resume()
+    }
+
+    func downloadImage(from urlString: String, completed: @escaping (UIImage?) -> Void) {
+        // If cached image is available, return
+        let cacheKey = NSString(string: urlString)
+
+        if let image = cache.object(forKey: cacheKey) {
+            completed(image)
+            return
+        }
+
+        // If cached image is not available, do the network call to download it
+        // Create the URL
+        guard let url = URL(string: urlString) else {
+            // If url is invalid, return nil
+            completed(nil)
+            return
+        }
+
+        // Create the URL session
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self,
+                  error == nil,
+                  let response = response as? HTTPURLResponse, response.statusCode == 200,
+                  let data,
+                  let image = UIImage(data: data) else {
+                completed(nil)
+                // All guard statements must include a return statement
+                return
+            }
+            // Set the image to the cache
+            self.cache.setObject(image, forKey: cacheKey)
+
+            completed(image)
+        }
+        // Start the task
         task.resume()
     }
 }

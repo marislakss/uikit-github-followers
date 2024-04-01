@@ -20,11 +20,10 @@ class GFSecondaryTitleLabel: UILabel {
     }
 
     // This initializer is called when we create a label from code
-    init(fontSize: CGFloat) {
-        super.init(frame: .zero)
+    convenience init(fontSize: CGFloat) {
+        self.init(frame: .zero)
         // Set the font size and weight
         font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
-        configure()
     }
 
     private func configure() {

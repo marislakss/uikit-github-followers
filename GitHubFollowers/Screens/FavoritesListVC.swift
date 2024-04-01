@@ -7,7 +7,8 @@
 
 import UIKit
 
-class FavoritesListVC: UIViewController {
+// FavoritesListVC is a subclass of GFDataLoadingVC superclass
+class FavoritesListVC: GFDataLoadingVC {
 
     let tableView = UITableView()
     var favorites: [Follower] = []

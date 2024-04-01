@@ -13,7 +13,7 @@ class GFEmptyStateView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        // Configure the view
+        // Call configure() the view method
         configure()
     }
 

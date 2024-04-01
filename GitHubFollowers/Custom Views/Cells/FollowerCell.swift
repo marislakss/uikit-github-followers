@@ -18,11 +18,18 @@ class FollowerCell: UICollectionViewCell {
     }
 
     @available(*, unavailable)
-    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     func set(follower: Follower) {
         usernameLabel.text = follower.login
-        avatarImageView.downloadImage(from: follower.avatarUrl)
+        NetworkManager.shared.downloadImage(from: follower.avatarUrl) { [weak self] image in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                self.avatarImageView.image = image
+            }
+        }
     }
 
     private func configure() {
@@ -53,7 +60,7 @@ class FollowerCell: UICollectionViewCell {
                 constant: -padding
             ),
             usernameLabel.heightAnchor.constraint(equalToConstant: 20),
-            //know font is 16 and letters such as "g" or "j" will be a bit bigger, so need some padding
+            // Note that font is 16, letters such as "g" or "j" will be a bit bigger, so need some padding
         ])
     }
 }

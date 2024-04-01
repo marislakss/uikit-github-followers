@@ -12,7 +12,8 @@ protocol UserInfoVCDelegate: AnyObject {
     func didTapGetFollowers(for user: User)
 }
 
-class UserInfoVC: UIViewController {
+// UserInfoVC is a subclass of GFDataLoadingVC superclass
+class UserInfoVC: GFDataLoadingVC {
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
@@ -70,7 +71,7 @@ class UserInfoVC: UIViewController {
         add(childVC: repoItemVC, to: itemViewOne)
         add(childVC: followerItemVC, to: itemViewTwo)
         add(childVC: GFUserInfoHeaderVC(user: user), to: headerView)
-        dateLabel.text = "On GitHub since \(user.createdAt.convertToDisplayFormat())"
+        dateLabel.text = "On GitHub since \(user.createdAt.convertToMonthYearFormat())"
     }
 
     func layoutUI() {
@@ -147,9 +148,9 @@ extension UserInfoVC: UserInfoVCDelegate {
         // Tell FollowersListVC the new user
         guard user.followers != 0 else {
             presentGFAlertOnMainThread(
-                title: "No followers!",
-                message: "This user has no followers. What a shame. 😞",
-                buttonTitle: "So sad"
+                title: "No Followers!",
+                message: "This user has no followers. 😞",
+                buttonTitle: "OK"
             )
             return
         }

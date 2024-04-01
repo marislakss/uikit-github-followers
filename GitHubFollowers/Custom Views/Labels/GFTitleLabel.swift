@@ -8,6 +8,7 @@
 import UIKit
 
 class GFTitleLabel: UILabel {
+    // Designated (custom) initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -17,21 +18,14 @@ class GFTitleLabel: UILabel {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
-        super.init(frame: .zero)
+    
+    // Convenience initializer with text alignment and font size
+    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
+        self.init(frame: .zero)
         // Set the text alignment
         self.textAlignment = textAlignment
         // Set the font size
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
-//        // Set the number of lines
-//        numberOfLines = 0
-//        // Set the color
-//        textColor = .label
-//        // Set the autoresizing mask
-//        translatesAutoresizingMaskIntoConstraints = false
-
-        configure()
     }
 
     private func configure() {
