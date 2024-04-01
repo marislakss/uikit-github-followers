@@ -9,8 +9,8 @@ import UIKit
 
 class GFAvatarImageView: UIImageView {
     let cache            = NetworkManager.shared.cache
-    let placeholderImage = UIImage(named: "avatar-placeholder")!
-    
+    let placeholderImage = Images.placeholder
+
     // Override the designated init to call the configure method
     override init(frame: CGRect) {
         super.init(frame: frame)
