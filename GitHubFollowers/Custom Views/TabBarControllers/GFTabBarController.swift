@@ -15,7 +15,7 @@ class GFTabBarController: UITabBarController {
         viewControllers = [createSearchNC(), createFavoritesNC()]
     }
 
-    // MARK: - View Controller Creation
+    // MARK: - Navigation Controllers
 
     func createSearchNC() -> UINavigationController {
         let searchVC = SearchVC()
