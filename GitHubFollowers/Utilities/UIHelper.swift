@@ -7,7 +7,10 @@
 
 import UIKit
 
-struct UIHelper {
+// MARK: - UIHelper
+
+// To eliminate the ability to initialize an empty UIHelper (let help = UIHelper()) change the struct to enum
+enum UIHelper {
 
     static func createThreeColumnFlowLayout(in view: UIView) -> UICollectionViewFlowLayout {
         // Initialize the flow layout
