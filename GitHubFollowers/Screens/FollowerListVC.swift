@@ -24,6 +24,7 @@ class FollowerListVC: GFDataLoadingVC {
     var page = 1
     var hasMoreFollowers = true
     var isSearching = false
+    var isLoadingMoreFollowers = false
 
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
@@ -33,11 +34,12 @@ class FollowerListVC: GFDataLoadingVC {
         self.username = username
         title = username
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
@@ -86,7 +88,6 @@ class FollowerListVC: GFDataLoadingVC {
         let searchController = UISearchController()
         // Set the searchController delegate
         searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
         // Set the placeholder
         searchController.searchBar.placeholder = "Search for a username"
         // Set the searchController to the navigationItem
@@ -98,10 +99,13 @@ class FollowerListVC: GFDataLoadingVC {
     func getFollowers(username: String, page: Int) {
         // Show the loading view
         showLoadingView()
+        // Set isLoadingMoreFollowers to true, then proceed with the network call
+        isLoadingMoreFollowers = true
         // This is called 'call site' in Swift
         NetworkManager.shared
             .getFollowers(for: username, page: page) { [weak self] result in
-                // [weak self] is a capture list
+                // [weak self] is a capture list used in closures to avoid strong reference cycles,
+                // also known as retain cycles.
                 // Unwrap self, as using [weak self] makes it an optional
                 guard let self else { return }
 
@@ -134,6 +138,9 @@ class FollowerListVC: GFDataLoadingVC {
                         buttonTitle: "OK"
                     )
                 }
+
+                // Set isLoadingMoreFollowers to false, as the network call has finished
+                self.isLoadingMoreFollowers = false
             }
     }
 
@@ -218,8 +225,12 @@ extension FollowerListVC: UICollectionViewDelegate {
         let height = scrollView.frame.size.height
 
         if offsetY > contentHeight - height {
-            guard hasMoreFollowers else { return }
+            // Guard statement says: make sure that user has more followers & also make sure
+            // isLoadingMoreFollowers is false, if not - return
+            guard hasMoreFollowers, !isLoadingMoreFollowers else { return }
+            // In case both criteria are met, increment the page number & get more followers
             page += 1
+            // Start the network call to get more followers
             getFollowers(username: username, page: page)
         }
     }
@@ -243,13 +254,14 @@ extension FollowerListVC: UICollectionViewDelegate {
     }
 }
 
-extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
+extension FollowerListVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         // Check if the search bar is empty
         // Use guard let as text: String? { get set } is optional
         guard let filter = searchController.searchBar.text, !filter.isEmpty else {
             filteredFollowers.removeAll()
             updateData(on: followers)
+            isSearching = false
             return
         }
         isSearching = true
@@ -257,11 +269,6 @@ extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
         filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
         // Update the data
         updateData(on: filteredFollowers)
-    }
-
-    func searchBarCancelButtonClicked(_: UISearchBar) {
-        isSearching = false
-        updateData(on: followers)
     }
 }
 
@@ -273,7 +280,7 @@ extension FollowerListVC: FollowerListVCDelegate {
         page = 1
         followers.removeAll()
         filteredFollowers.removeAll()
-        collectionView.scrollsToTop = true
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
 
         if isSearching {
             navigationItem.searchController?.searchBar.text = ""

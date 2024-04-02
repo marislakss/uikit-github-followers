@@ -52,7 +52,6 @@ class GFDataLoadingVC: UIViewController {
         // Hide the search bar when transitioning to the empty state view to
         // provide a cleaner user interface when no followers are found.
         navigationItem.searchController?.searchBar.isHidden = true
-        // Add the emptyStateView to the view
         view.addSubview(emptyStateView)
     }
 }
