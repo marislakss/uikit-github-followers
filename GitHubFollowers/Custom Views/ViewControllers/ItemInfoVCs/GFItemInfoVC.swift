@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol ItemInfoVCDelegate: AnyObject {
+    func didTapGitHubProfile(for user: User)
+    func didTapGetFollowers(for user: User)
+}
+
 // Create superclass (parent) item info view controller
 class GFItemInfoVC: UIViewController {
 
@@ -16,10 +21,6 @@ class GFItemInfoVC: UIViewController {
     let actionButton = GFButton()
 
     var user: User!
-    // Use weak on delegate to avoid retain cycles
-    // A retain cycle, also known as a circular reference, occurs when two or more objects 
-    // reference each other strongly, preventing them from being deallocated.
-    weak var delegate: UserInfoVCDelegate!
 
     // Custom initializer
     init(user: User) {
