@@ -46,6 +46,10 @@ class GFAlertVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+
+        view.addSubview(containerView)
+        containerView.addSubviews(blurEffectView, titleLabel, actionButton, messageLabel)
+
         // Remember to call the configure methods
         configureBlurEffectView()
         configureContainerView()
@@ -54,22 +58,7 @@ class GFAlertVC: UIViewController {
         configureMessageLabel()
     }
 
-    private func configureBlurEffectView() {
-        view.addSubview(blurEffectView)
-
-        NSLayoutConstraint.activate([
-            blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
-            blurEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blurEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        
-        // Set the alpha for the blur effect view
-        blurEffectView.alpha = 0.75
-    }
-
     func configureContainerView() {
-        view.addSubview(containerView)
 
         // Add constraints
         NSLayoutConstraint.activate([
@@ -84,8 +73,21 @@ class GFAlertVC: UIViewController {
         ])
     }
 
+    // Add Blur Effect View when the alert is presented
+    private func configureBlurEffectView() {
+
+        NSLayoutConstraint.activate([
+            blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            blurEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            blurEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        // Set the alpha for the blur effect view
+        blurEffectView.alpha = 0.75
+    }
+
     func configureTitleLabel() {
-        containerView.addSubview(titleLabel)
 
         // Set the title text
         titleLabel.text = alertTitle ?? "Something went wrong"
@@ -104,7 +106,6 @@ class GFAlertVC: UIViewController {
     }
 
     func configureActionButton() {
-        containerView.addSubview(actionButton)
 
         // Set the button title
         actionButton.setTitle(buttonTitle ?? "OK", for: .normal)
@@ -126,7 +127,6 @@ class GFAlertVC: UIViewController {
     }
 
     func configureMessageLabel() {
-        containerView.addSubview(messageLabel)
 
         // Set the message text
         messageLabel.text           = message ?? "Unable to complete request"

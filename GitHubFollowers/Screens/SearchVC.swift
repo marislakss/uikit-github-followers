@@ -23,6 +23,9 @@ class SearchVC: UIViewController {
         super.viewDidLoad()
         // Adapt the view to the dark & light mode
         view.backgroundColor = .systemBackground
+        // Add the subviews to the view, this is equivalent to drag and drop in the storyboards
+        view.addSubviews(logoImageView, usernameTextField, callToActionButton)
+        // Call the configure methods & createDismissKeyboardTapGesture
         configureLogoImageView()
         configureTextField()
         configureCallToActionButton()
@@ -62,7 +65,6 @@ class SearchVC: UIViewController {
     }
 
     func configureLogoImageView() {
-        view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         // Set the image
         logoImageView.image = Images.ghLogo
@@ -89,7 +91,6 @@ class SearchVC: UIViewController {
     }
 
     func configureTextField() {
-        view.addSubview(usernameTextField)
         // Set the delegate, so we can use the text field delegate methods
         usernameTextField.delegate = self
 
@@ -113,8 +114,6 @@ class SearchVC: UIViewController {
     }
 
     func configureCallToActionButton() {
-        // Add the button to the view, equivalent to drag and drop in the storyboard
-        view.addSubview(callToActionButton)
         // Add the target to the button
         callToActionButton.addTarget(
             self,
