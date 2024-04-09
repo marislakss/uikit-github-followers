@@ -61,14 +61,8 @@ class UserInfoVC: GFDataLoadingVC {
     }
 
     func configureUIElements(with user: User) {
-        let repoItemVC = GFRepoItemVC(user: user)
-        repoItemVC.delegate = self
-
-        let followerItemVC = GFFollowerItemVC(user: user)
-        followerItemVC.delegate = self
-
-        add(childVC: repoItemVC, to: itemViewOne)
-        add(childVC: followerItemVC, to: itemViewTwo)
+        add(childVC: GFRepoItemVC(user: user, delegate: self), to: itemViewOne)
+        add(childVC: GFFollowerItemVC(user: user, delegate: self), to: itemViewTwo)
         add(childVC: GFUserInfoHeaderVC(user: user), to: headerView)
         dateLabel.text = "On GitHub since \(user.createdAt.convertToMonthYearFormat())"
     }
