@@ -26,15 +26,17 @@ class GFBodyLabel: UILabel {
 
     private func configure() {
         // Set the color
-        textColor                   = .secondaryLabel
+        textColor                         = .secondaryLabel
         // Set the text font
-        font                        = UIFont.preferredFont(forTextStyle: .body)
+        font                              = UIFont.preferredFont(forTextStyle: .body)
+        // Set BodyLabel to work with dynamic type
+        adjustsFontForContentSizeCategory = true
         // Set the minimum scale factor
-        adjustsFontSizeToFitWidth   = true
+        adjustsFontSizeToFitWidth         = true
         // Set minimum scale factor
-        minimumScaleFactor          = 0.75
+        minimumScaleFactor                = 0.75
         // Set the line break mode
-        lineBreakMode               = .byWordWrapping
+        lineBreakMode                     = .byWordWrapping
         // Set constraints
         translatesAutoresizingMaskIntoConstraints = false
     }
