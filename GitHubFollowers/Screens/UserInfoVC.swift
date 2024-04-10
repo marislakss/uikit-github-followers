@@ -13,10 +13,14 @@ protocol UserInfoVCDelegate: AnyObject {
 
 // UserInfoVC is a subclass of GFDataLoadingVC superclass
 class UserInfoVC: GFDataLoadingVC {
-    let headerView = UIView()
-    let itemViewOne = UIView()
-    let itemViewTwo = UIView()
-    let dateLabel = GFBodyLabel(textAlignment: .center)
+    // Create the scrollView and contentView programatically
+    let scrollView          = UIScrollView()
+    let contentView         = UIView()
+
+    let headerView          = UIView()
+    let itemViewOne         = UIView()
+    let itemViewTwo         = UIView()
+    let dateLabel           = GFBodyLabel(textAlignment: .center)
     var itemViews: [UIView] = []
 
     var username: String!
@@ -25,6 +29,7 @@ class UserInfoVC: GFDataLoadingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configureScrollView()
         configureNavigationBar()
         layoutUI()
         getUserInfo()
@@ -40,6 +45,23 @@ class UserInfoVC: GFDataLoadingVC {
         )
         // Add the done button to the navigation bar
         navigationItem.rightBarButtonItem = doneButton
+    }
+
+    func configureScrollView() {
+        // Add scrollView to the view
+        view.addSubview(scrollView)
+        // Add contentView to the scrollView
+        scrollView.addSubview(contentView)
+        // Use the pinToEdges method from the UIView extension
+        scrollView.pinToEdges(of: view)
+        // Use the pinToEdges method from the UIView extension to pin the contentView to the scrollView
+        contentView.pinToEdges(of: scrollView)
+        
+        // Set the explicit width and height constraints of the contentView
+        NSLayoutConstraint.activate([
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 600)
+        ])
     }
 
     func getUserInfo() {
@@ -74,15 +96,12 @@ class UserInfoVC: GFDataLoadingVC {
         itemViews = [headerView, itemViewOne, itemViewTwo, dateLabel]
 
         for itemView in itemViews {
-            view.addSubview(itemView)
+            contentView.addSubview(itemView)
             itemView.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
-                itemView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
-                itemView.trailingAnchor.constraint(
-                    equalTo: view.trailingAnchor,
-                    constant: -padding
-                ),
+                itemView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+                itemView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
             ])
         }
 
@@ -91,7 +110,7 @@ class UserInfoVC: GFDataLoadingVC {
 //        itemViewTwo.backgroundColor = .systemBlue
 
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 210),
 
             itemViewOne.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
