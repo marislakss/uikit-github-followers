@@ -34,6 +34,7 @@ class GFItemInfoVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureBackgroundView()
         layoutUI()
         configureStackView()

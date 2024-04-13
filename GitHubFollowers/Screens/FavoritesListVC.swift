@@ -14,6 +14,7 @@ class FavoritesListVC: GFDataLoadingVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         configureViewController()
         configureTableView()
 
