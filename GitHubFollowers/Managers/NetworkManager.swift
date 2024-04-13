@@ -8,9 +8,9 @@
 import UIKit
 
 class NetworkManager {
-    static let shared = NetworkManager()
+    static let shared   = NetworkManager()
     private let baseURL = "https://api.github.com/users/"
-    let cache = NSCache<NSString, UIImage>()
+    let cache           = NSCache<NSString, UIImage>()
 
     private init() {}
 
@@ -43,9 +43,9 @@ class NetworkManager {
             }
 
             do {
-                let decoder = JSONDecoder()
+                let decoder                 = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let followers = try decoder.decode([Follower].self, from: data)
+                let followers               = try decoder.decode([Follower].self, from: data)
                 completed(.success(followers))
             } catch {
                 print("Error decoding User: \(error)")
@@ -84,10 +84,10 @@ class NetworkManager {
             }
 
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let decoder                  = JSONDecoder()
+                decoder.keyDecodingStrategy  = .convertFromSnakeCase
                 decoder.dateDecodingStrategy = .iso8601
-                let user = try decoder.decode(User.self, from: data)
+                let user                     = try decoder.decode(User.self, from: data)
                 completed(.success(user))
             } catch {
                 completed(.failure(.invalidData))
@@ -98,9 +98,9 @@ class NetworkManager {
     }
 
     func downloadImage(from urlString: String, completed: @escaping (UIImage?) -> Void) {
-        // If cached image is available, return
         let cacheKey = NSString(string: urlString)
-
+        
+        // If cached image is available, return
         if let image = cache.object(forKey: cacheKey) {
             completed(image)
             return
@@ -119,7 +119,7 @@ class NetworkManager {
             guard let self,
                   error == nil,
                   let response = response as? HTTPURLResponse, response.statusCode == 200,
-                  let data,
+                  let data = data,
                   let image = UIImage(data: data) else {
                 completed(nil)
                 // All guard statements must include a return statement

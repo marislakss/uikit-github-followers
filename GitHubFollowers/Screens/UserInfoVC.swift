@@ -28,6 +28,7 @@ class UserInfoVC: GFDataLoadingVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         configureViewController()
         configureScrollView()
         configureNavigationBar()
@@ -90,7 +91,7 @@ class UserInfoVC: GFDataLoadingVC {
     }
 
     func layoutUI() {
-        let padding: CGFloat = 20
+        let padding: CGFloat    = 20
         let itemHeight: CGFloat = 140
 
         itemViews = [headerView, itemViewOne, itemViewTwo, dateLabel]
@@ -120,7 +121,7 @@ class UserInfoVC: GFDataLoadingVC {
             itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),
 
             dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
-            dateLabel.heightAnchor.constraint(equalToConstant: 50),
+            dateLabel.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 
@@ -153,6 +154,7 @@ extension UserInfoVC: GFRepoItemVCDelegate {
             )
             return
         }
+
         presentSafariVC(with: url)
     }
 }
@@ -168,6 +170,7 @@ extension UserInfoVC: GFFollowerItemVCDelegate {
             )
             return
         }
+
         delegate.didRequestFollowers(for: user.login)
         dismissVC()
     }

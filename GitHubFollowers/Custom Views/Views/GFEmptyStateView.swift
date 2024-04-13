@@ -8,12 +8,11 @@
 import UIKit
 
 class GFEmptyStateView: UIView {
-    let messageLabel = GFTitleLabel(textAlignment: .center, fontSize: 28)
+    let messageLabel  = GFTitleLabel(textAlignment: .center, fontSize: 28)
     let logoImageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        // Call configure() the view method
         configure()
     }
 
@@ -41,19 +40,14 @@ class GFEmptyStateView: UIView {
     private func configureMessageLabel() {
         // Configure the message label
         messageLabel.numberOfLines = 3
-        messageLabel.textColor = .secondaryLabel
+        messageLabel.textColor     = .secondaryLabel
 
         //                                           IF            OR           IF      do -80 if true OR  do -150 if false
         let labelCenterYConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? -80 : -150
-
-        let messageLabelCenterYConstant = messageLabel.centerYAnchor.constraint(
-            equalTo: centerYAnchor,
-            constant: labelCenterYConstant
-        )
-        messageLabelCenterYConstant.isActive = true
         
         // Message label constraints
         NSLayoutConstraint.activate([
+            messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: labelCenterYConstant),
             messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
             messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
             messageLabel.heightAnchor.constraint(equalToConstant: 200)
@@ -67,17 +61,12 @@ class GFEmptyStateView: UIView {
 
         let logoBottomConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 80 : 40
 
-        let logoImageViewBottomConstraint = logoImageView.bottomAnchor.constraint(
-            equalTo: bottomAnchor,
-            constant: logoBottomConstant
-        )
-        logoImageViewBottomConstraint.isActive = true
-
         // Logo image view constraints
         NSLayoutConstraint.activate([
             logoImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1.3),
             logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor),
-            logoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 170)
+            logoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 170),
+            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: logoBottomConstant)
         ])
     }
 }

@@ -9,7 +9,6 @@ import UIKit
 
 // FavoritesListVC is a subclass of GFDataLoadingVC superclass
 class FavoritesListVC: GFDataLoadingVC {
-
     let tableView             = UITableView()
     var favorites: [Follower] = []
 
@@ -17,6 +16,7 @@ class FavoritesListVC: GFDataLoadingVC {
         super.viewDidLoad()
         configureViewController()
         configureTableView()
+
         navigationController?.isNavigationBarHidden = false
     }
 
@@ -49,18 +49,7 @@ class FavoritesListVC: GFDataLoadingVC {
 
             switch result {
             case .success(let favorites):
-                if favorites.isEmpty {
-                    self.showEmptyStateView(
-                        with: "No Favorites?\nAdd one on the follower screen.",
-                        in: self.view
-                    )
-                } else {
-                    self.favorites = favorites
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        self.view.bringSubviewToFront(self.tableView)
-                    }
-                }
+                self.updateUI(with: favorites)
 
             case .failure(let error):
                 self.presentGFAlertOnMainThread(
@@ -68,6 +57,21 @@ class FavoritesListVC: GFDataLoadingVC {
                     message: error.rawValue,
                     buttonTitle: "OK"
                 )
+            }
+        }
+    }
+
+    func updateUI(with favorites: [Follower]) {
+        if favorites.isEmpty {
+            self.showEmptyStateView(
+                with: "No Favorites?\nAdd one on the follower screen.",
+                in: self.view
+            )
+        } else {
+            self.favorites = favorites
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.view.bringSubviewToFront(self.tableView)
             }
         }
     }

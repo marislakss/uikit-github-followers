@@ -28,13 +28,13 @@ class GFSecondaryTitleLabel: UILabel {
 
     private func configure() {
         // This is a dynamic color
-        textColor = .secondaryLabel
+        textColor                   = .secondaryLabel
         // This will make the font size smaller if the text is too long
-        adjustsFontSizeToFitWidth = true
+        adjustsFontSizeToFitWidth   = true
         // This is the minimum size of the font
-        minimumScaleFactor = 0.90
+        minimumScaleFactor          = 0.90
         // This will truncate the text if it is too long
-        lineBreakMode = .byTruncatingTail
+        lineBreakMode               = .byTruncatingTail
         // This will allow us to use autolayout
         translatesAutoresizingMaskIntoConstraints = false
     }

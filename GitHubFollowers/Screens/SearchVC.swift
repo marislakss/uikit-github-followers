@@ -8,10 +8,9 @@
 import UIKit
 
 class SearchVC: UIViewController {
-    let logoImageView = UIImageView()
-    let usernameTextField = GFTextField()
+    let logoImageView      = UIImageView()
+    let usernameTextField  = GFTextField()
     let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
-    var logoImageViewTopConstraint: NSLayoutConstraint!
 
     // Computed property
     var isUsernameEntered: Bool {
@@ -25,6 +24,7 @@ class SearchVC: UIViewController {
         view.backgroundColor = .systemBackground
         // Add the subviews to the view, this is equivalent to drag and drop in the storyboards
         view.addSubviews(logoImageView, usernameTextField, callToActionButton)
+
         // Call the configure methods & createDismissKeyboardTapGesture
         configureLogoImageView()
         configureTextField()
@@ -69,24 +69,17 @@ class SearchVC: UIViewController {
         // Set the image
         logoImageView.image = Images.ghLogo
 
-        let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes
-            .isiPhone8Zoomed ? 20 : 80
+        let topConstraintConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 80
 
-        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor,
-            constant: topConstraintConstant
-        )
-        logoImageViewTopConstraint.isActive = true
         // Disable keyboard suggestions bar for usernameTextField
         usernameTextField.spellCheckingType = .no
 
         // Using array set the constraints programmatically
         NSLayoutConstraint.activate([
-            // Center the image horizontally
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstraintConstant),
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            // Set the width and height of the image
             logoImageView.heightAnchor.constraint(equalToConstant: 200),
-            logoImageView.widthAnchor.constraint(equalToConstant: 200),
+            logoImageView.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
 
@@ -94,49 +87,26 @@ class SearchVC: UIViewController {
         // Set the delegate, so we can use the text field delegate methods
         usernameTextField.delegate = self
 
-        // Set the constraints programmatically
-        // Most of times 4 constraints are needed
+        // Set the constraints programmatically, most of times 4 constraints are needed
         NSLayoutConstraint.activate([
-            usernameTextField.topAnchor.constraint(
-                equalTo: logoImageView.bottomAnchor,
-                constant: 48
-            ),
-            usernameTextField.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 50
-            ),
-            usernameTextField.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -50 // Negative value for the trailing constraints
-            ),
-            usernameTextField.heightAnchor.constraint(equalToConstant: 50),
+            usernameTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 48),
+            usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            // Negative value for the trailing constraints
+            usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            usernameTextField.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 
     func configureCallToActionButton() {
         // Add the target to the button
-        callToActionButton.addTarget(
-            self,
-            action: #selector(pushFollowerListVC),
-            for: .touchUpInside
-        )
+        callToActionButton.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
 
-        // Set the constraints programmatically
-        // Most of times 4 constraints are needed
         NSLayoutConstraint.activate([
-            callToActionButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -50 // Negative value for the trailing & bottom constraints
-            ),
-            callToActionButton.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: 50
-            ),
-            callToActionButton.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -50 // Negative value for the trailing & bottom constraints
-            ),
-            callToActionButton.heightAnchor.constraint(equalToConstant: 50),
+            // Negative value for the trailing & bottom constraints
+            callToActionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            callToActionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            callToActionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            callToActionButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

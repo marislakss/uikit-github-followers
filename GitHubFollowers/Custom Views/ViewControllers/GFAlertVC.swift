@@ -46,7 +46,6 @@ class GFAlertVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
-
         view.addSubview(containerView)
         containerView.addSubviews(blurEffectView, titleLabel, actionButton, messageLabel)
 
@@ -59,7 +58,6 @@ class GFAlertVC: UIViewController {
     }
 
     func configureContainerView() {
-
         // Add constraints
         NSLayoutConstraint.activate([
             // Center vertically
@@ -69,13 +67,12 @@ class GFAlertVC: UIViewController {
             // Set the width
             containerView.widthAnchor.constraint(equalToConstant: 280),
             // Set the height
-            containerView.heightAnchor.constraint(equalToConstant: 220),
+            containerView.heightAnchor.constraint(equalToConstant: 220)
         ])
     }
 
     // Add Blur Effect View when the alert is presented
     private func configureBlurEffectView() {
-
         NSLayoutConstraint.activate([
             blurEffectView.topAnchor.constraint(equalTo: view.topAnchor),
             blurEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -88,7 +85,6 @@ class GFAlertVC: UIViewController {
     }
 
     func configureTitleLabel() {
-
         // Set the title text
         titleLabel.text = alertTitle ?? "Something went wrong"
 
@@ -101,12 +97,11 @@ class GFAlertVC: UIViewController {
             // Set the trailing anchor (trailing = right)
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             // Set the height
-            titleLabel.heightAnchor.constraint(equalToConstant: 28),
+            titleLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
 
     func configureActionButton() {
-
         // Set the button title
         actionButton.setTitle(buttonTitle ?? "OK", for: .normal)
 
@@ -122,12 +117,11 @@ class GFAlertVC: UIViewController {
             // Set the trailing anchor (trailing = right)
             actionButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             // Set the height
-            actionButton.heightAnchor.constraint(equalToConstant: 44),
+            actionButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 
     func configureMessageLabel() {
-
         // Set the message text
         messageLabel.text           = message ?? "Unable to complete request"
         // Set the number of lines
@@ -142,7 +136,7 @@ class GFAlertVC: UIViewController {
             // Set the trailing anchor (trailing = right)
             messageLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             // Set the bottom anchor
-            messageLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -12),
+            messageLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -12)
         ])
     }
 

@@ -17,11 +17,9 @@ enum PersistenceManager {
     private static let defaults = UserDefaults.standard
 
     // Enum for managing UserDefaults keys
-    enum Keys {
-        static let favorites = "favorites"
-    }
+    enum Keys { static let favorites = "favorites" }
 
-    // Function to update favorites in UserDefaults
+    // Static function to update favorites in UserDefaults
     static func updateWith(
         favorite: Follower,
         actionType: PersistenceActionType,
@@ -47,7 +45,6 @@ enum PersistenceManager {
                     // $0 is a shorthand for each element in the array
                     favorites.removeAll { $0.login == favorite.login }
                 }
-
                 // Save updated list of favorites to UserDefaults
                 completed(save(favorites: favorites))
 
@@ -66,7 +63,7 @@ enum PersistenceManager {
 
         do {
             // When retrieving data from UserDefaults, we need to decode it.
-            let decoder = JSONDecoder()
+            let decoder   = JSONDecoder()
             let favorites = try decoder.decode([Follower].self, from: favoritesData)
             completed(.success(favorites))
         } catch {
@@ -78,7 +75,7 @@ enum PersistenceManager {
     static func save(favorites: [Follower]) -> GFError? {
         do {
             // When saving data to UserDefaults, we need to encode it.
-            let encoder = JSONEncoder()
+            let encoder          = JSONEncoder()
             let encodedFavorites = try encoder.encode(favorites)
             // Save encoded data to UserDefaults
             defaults.set(encodedFavorites, forKey: Keys.favorites)

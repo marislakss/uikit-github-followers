@@ -14,7 +14,6 @@ extension Date {
         let dateFormatter = DateFormatter()
         // Set the date format
         dateFormatter.dateFormat = "MMM yyyy"
-
         // Return the date
         return dateFormatter.string(from: self)
     }

@@ -12,26 +12,30 @@ class GFDataLoadingVC: UIViewController {
 
     func showLoadingView() {
         // Initialize the containerView
-        containerView = UIView(frame: view.bounds)
+        containerView                 = UIView(frame: view.bounds)
         // Add the containerView to the view
         view.addSubview(containerView)
+
         // Set the background color
         containerView.backgroundColor = .systemBackground
         // Set the alpha
-        containerView.alpha = 0
+        containerView.alpha           = 0
+
         // Animate the alpha
-        UIView.animate(withDuration: 0.25) {
-            self.containerView.alpha = 0.8
-        }
+        UIView.animate(withDuration: 0.25) { self.containerView.alpha = 0.8 }
         // Add the activity indicator
+
         let activityIndicator = UIActivityIndicatorView(style: .large)
         containerView.addSubview(activityIndicator)
+
         // Center the activity indicator
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
         ])
+
         // Start animating
         activityIndicator.startAnimating()
     }

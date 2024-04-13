@@ -16,7 +16,7 @@ extension UIViewController {
             // Set the presentation style
             alertVC.modalPresentationStyle = .overFullScreen
             // Set the transition style
-            alertVC.modalTransitionStyle = .crossDissolve
+            alertVC.modalTransitionStyle   = .crossDissolve
             // Present the alert
             self.present(alertVC, animated: true)
         }
