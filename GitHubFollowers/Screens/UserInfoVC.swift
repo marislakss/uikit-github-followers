@@ -66,19 +66,21 @@ class UserInfoVC: GFDataLoadingVC {
     }
 
     func getUserInfo() {
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self else { return }
 
-            switch result {
-            case let .success(user):
-                DispatchQueue.main.async { self.configureUIElements(with: user) }
-
-            case let .failure(error):
-                self.presentGFAlertOnMainThread(
-                    title: "Something went wrong",
-                    message: error.rawValue,
-                    buttonTitle: "OK"
-                )
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                configureUIElements(with: user)
+            } catch {
+                if let gfError = error as? GFError {
+                    presentGFAlert(
+                        title: "Something went wrong",
+                        message: gfError.rawValue,
+                        buttonTitle: "OK"
+                    )
+                } else {
+                    presentDefaultError()
+                }
             }
         }
     }
@@ -147,7 +149,7 @@ extension UserInfoVC: GFRepoItemVCDelegate {
     func didTapGitHubProfile(for user: User) {
         // Show Safari View Controller
         guard let url = URL(string: user.htmlUrl) else {
-            presentGFAlertOnMainThread(
+            presentGFAlert(
                 title: "Invalid URL",
                 message: "The url attached to this user is invalid.",
                 buttonTitle: "OK"
@@ -163,9 +165,9 @@ extension UserInfoVC: GFFollowerItemVCDelegate {
     func didTapGetFollowers(for user: User) {
         // Tell FollowersListVC the new user
         guard user.followers != 0 else {
-            presentGFAlertOnMainThread(
+            presentGFAlert(
                 title: "No Followers!",
-                message: "This user has no followers. 😞",
+                message: "This user has no followers.",
                 buttonTitle: "OK"
             )
             return

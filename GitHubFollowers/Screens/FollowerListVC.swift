@@ -92,6 +92,7 @@ class FollowerListVC: GFDataLoadingVC {
         // Set isLoadingMoreFollowers to true, then proceed with the network call
         isLoadingMoreFollowers = true
 
+        // Use Task if function is not marked with "async"
         Task {
             do {
                 let followers = try await NetworkManager.shared.getFollowers(for: username, page: page)
@@ -100,7 +101,7 @@ class FollowerListVC: GFDataLoadingVC {
             } catch {
                 if let gfError = error as? GFError {
                     presentGFAlert(
-                        title: "Bad Stuff Happened",
+                        title: "Bad stuff happened",
                         message: gfError.rawValue,
                         buttonTitle: "OK"
                     )
@@ -108,6 +109,7 @@ class FollowerListVC: GFDataLoadingVC {
                     presentDefaultError()
                 }
 
+                isLoadingMoreFollowers = false
                 dismissLoadingView()
             }
 
@@ -117,7 +119,7 @@ class FollowerListVC: GFDataLoadingVC {
 //                dismissLoadingView()
 //                return
 //            }
-//
+//            
 //            updateUI(with: followers)
 //            dismissLoadingView()
         }
@@ -130,12 +132,13 @@ class FollowerListVC: GFDataLoadingVC {
 
         // In case the user doesn't have any followers, show the empty state view
         if self.followers.isEmpty {
-            let message = "This user doesn't have any followers. Go follow them 😃."
+            let message = "This user doesn't have any followers. Go follow them!"
             // When presenting a view, remember to switch to main thread
             // Reason is that this is done on background thread by default
             DispatchQueue.main.async {
                 self.showEmptyStateView(with: message, in: self.view)
             }
+
             return
         }
 
@@ -151,7 +154,7 @@ class FollowerListVC: GFDataLoadingVC {
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: FollowerCell.reuseID,
                     for: indexPath
-                // Cast default cell to FollowerCell
+                    // Cast default cell to FollowerCell
                 ) as! FollowerCell
                 // Set the cell data
                 cell.set(follower: follower)
@@ -175,45 +178,53 @@ class FollowerListVC: GFDataLoadingVC {
     @objc func addButtonTapped() {
         showLoadingView()
 
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self = self else { return }
-            self.dismissLoadingView()
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                addUserToFavorites(user: user)
+                dismissLoadingView()
+            } catch {
+                if let gfError = error as? GFError {
+                    presentGFAlert(
+                        title: "Something went wrong",
+                        message: gfError.rawValue,
+                        buttonTitle: "OK"
+                    )
+                } else {
+                    presentDefaultError()
+                }
 
-            switch result {
-            case let .success(user):
-                self.addUserToFavorites(user: user)
-
-            case let .failure(error):
-                self.presentGFAlertOnMainThread(
-                    title: "Something went wrong",
-                    message: error.rawValue,
-                    buttonTitle: "OK"
-                )
+                dismissLoadingView()
             }
         }
-    }
 
-    func addUserToFavorites(user: User) {
-        let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
-        PersistenceManager
-            .updateWith(favorite: favorite, actionType: .add) { [weak self] error in
+        func addUserToFavorites(user: User) {
+            let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+
+            PersistenceManager.updateWith(favorite: favorite, actionType: .add) { [weak self] error in
                 guard let self else { return }
 
                 guard let error else {
-                    self.presentGFAlertOnMainThread(
-                        title: "Success!",
-                        message: "User added to Favorites!",
-                        buttonTitle: "OK"
-                    )
+                    DispatchQueue.main.async {
+                        self.presentGFAlert(
+                            title: "Success!",
+                            message: "User added to Favorites!",
+                            buttonTitle: "OK"
+                        )
+                    }
+
                     return
                 }
 
-                self.presentGFAlertOnMainThread(
-                    title: "Something went wrong",
-                    message: error.rawValue,
-                    buttonTitle: "OK"
-                )
+                DispatchQueue.main.async {
+                    self.presentGFAlert(
+                        title: "Something went wrong",
+                        message: error.rawValue,
+                        buttonTitle: "OK"
+                    )
+                }
             }
+        }
     }
 }
 

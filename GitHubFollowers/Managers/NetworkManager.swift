@@ -17,53 +17,13 @@ class NetworkManager {
         decoder.keyDecodingStrategy  = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601
     }
-
-//    func getFollowers(
-//        for username: String,
-//        page: Int,
-//        completed: @escaping (Result<[Follower], GFError>) -> Void
-//    ) {
-//        let endpoint = baseURL + "\(username)/followers?per_page=100&page=\(page)"
-//
-//        guard let url = URL(string: endpoint) else {
-//            completed(.failure(.invalidUsername))
-//            return
-//        }
-//
-//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-//            if let _ = error {
-//                completed(.failure(.unableToComplete))
-//                return
-//            }
-//
-//            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-//                completed(.failure(.invalidResponse))
-//                return
-//            }
-//
-//            guard let data else {
-//                completed(.failure(.invalidData))
-//                return
-//            }
-//
-//            do {
-//                let decoder                 = JSONDecoder()
-//                decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                let followers               = try decoder.decode([Follower].self, from: data)
-//                completed(.success(followers))
-//            } catch {
-//                print("Error decoding User: \(error)")
-//                completed(.failure(.invalidData))
-//            }
-//        }
-//        // Start Network Call
-//        task.resume()
-//    }
     
     // Network Call using async/await
     func getFollowers(for username: String, page: Int) async throws -> [Follower] {
-        let endpoint = baseURL + "\(username)/followers?per_page=100&page=\(page)"
-
+        // Create the endpoint
+        let endpoint  = baseURL + "\(username)/followers?per_page=100&page=\(page)"
+        
+        // Check if the endpoint is valid, if that fails throw an error
         guard let url = URL(string: endpoint) else {
             throw GFError.invalidUsername
         }
@@ -71,12 +31,14 @@ class NetworkManager {
         // await returns a tuple with data & response which are not optionals
         let(data, response) = try await URLSession.shared.data(from: url)
 
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+        // If have response, check the response code, if that fails throw an error
+        // Cast response to HTTPURLResponse & response becomes an optional
+        guard let response  = response as? HTTPURLResponse, response.statusCode == 200 else {
             throw GFError.invalidResponse
         }
 
         do {
-            // Decode the data and return the array of followers
+            // Decode array of followers from the data
             return try decoder.decode([Follower].self, from: data)
         } catch {
             // If unsuccessful, throw an error
@@ -84,46 +46,27 @@ class NetworkManager {
         }
     }
 
-    func getUserInfo(
-        for username: String,
-        completed: @escaping (Result<User, GFError>) -> Void
-    ) {
-        let endpoint = baseURL + "\(username)"
+
+    func getUserInfo(for username: String) async throws -> User {
+        let endpoint  = baseURL + "\(username)"
 
         guard let url = URL(string: endpoint) else {
-            completed(.failure(.invalidUsername))
-            return
+            throw GFError.invalidUsername
         }
 
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let _ = error {
-                completed(.failure(.unableToComplete))
-                return
-            }
+        let(data, response) = try await URLSession.shared.data(from: url)
 
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completed(.failure(.invalidResponse))
-                return
-            }
-
-            guard let data else {
-                completed(.failure(.invalidData))
-                return
-            }
-
-            do {
-                let decoder                  = JSONDecoder()
-                decoder.keyDecodingStrategy  = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .iso8601
-                let user                     = try decoder.decode(User.self, from: data)
-                completed(.success(user))
-            } catch {
-                completed(.failure(.invalidData))
-            }
+        guard let response  = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw GFError.invalidResponse
         }
-        // Start Network Call
-        task.resume()
+
+        do {
+            return try decoder.decode(User.self, from: data)
+        } catch {
+            throw GFError.invalidData
+        }
     }
+
 
     func downloadImage(from urlString: String, completed: @escaping (UIImage?) -> Void) {
         let cacheKey = NSString(string: urlString)
