@@ -26,6 +26,7 @@ class GFSecondaryTitleLabel: UILabel {
         font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
     }
 
+    
     private func configure() {
         // This is a dynamic color
         textColor                   = .secondaryLabel

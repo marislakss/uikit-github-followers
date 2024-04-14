@@ -18,6 +18,7 @@ class SearchVC: UIViewController {
         !usernameTextField.text!.isEmpty
     }
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Adapt the view to the dark & light mode
@@ -32,12 +33,14 @@ class SearchVC: UIViewController {
         createDismissKeyboardTapGesture()
     }
 
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         usernameTextField.text = ""
         // Hide the navigation bar
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
+
 
     func createDismissKeyboardTapGesture() {
         // Create a tap gesture recognizer
@@ -46,6 +49,7 @@ class SearchVC: UIViewController {
         // Tap anywhere on the screen to dismiss the keyboard
         view.addGestureRecognizer(tap)
     }
+
 
     @objc func pushFollowerListVC() {
         guard isUsernameEntered else {
@@ -63,6 +67,7 @@ class SearchVC: UIViewController {
         // Push the view controller
         navigationController?.pushViewController(followerListVC, animated: true)
     }
+
 
     func configureLogoImageView() {
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +88,7 @@ class SearchVC: UIViewController {
         ])
     }
 
+
     func configureTextField() {
         // Set the delegate, so we can use the text field delegate methods
         usernameTextField.delegate = self
@@ -96,6 +102,7 @@ class SearchVC: UIViewController {
             usernameTextField.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+
 
     func configureCallToActionButton() {
         // Add the target to the button
@@ -112,6 +119,7 @@ class SearchVC: UIViewController {
 }
 
 extension SearchVC: UITextFieldDelegate {
+    
     // This method is called when the user taps the return button on the keyboard
     func textFieldShouldReturn(_: UITextField) -> Bool {
         pushFollowerListVC()

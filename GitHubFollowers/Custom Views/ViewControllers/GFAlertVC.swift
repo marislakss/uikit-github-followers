@@ -43,6 +43,7 @@ class GFAlertVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
@@ -56,6 +57,7 @@ class GFAlertVC: UIViewController {
         configureActionButton()
         configureMessageLabel()
     }
+
 
     func configureContainerView() {
         // Add constraints
@@ -71,6 +73,7 @@ class GFAlertVC: UIViewController {
         ])
     }
 
+
     // Add Blur Effect View when the alert is presented
     private func configureBlurEffectView() {
         NSLayoutConstraint.activate([
@@ -83,6 +86,7 @@ class GFAlertVC: UIViewController {
         // Set the alpha for the blur effect view
         blurEffectView.alpha = 0.75
     }
+
 
     func configureTitleLabel() {
         // Set the title text
@@ -100,6 +104,7 @@ class GFAlertVC: UIViewController {
             titleLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
+
 
     func configureActionButton() {
         // Set the button title
@@ -121,6 +126,7 @@ class GFAlertVC: UIViewController {
         ])
     }
 
+
     func configureMessageLabel() {
         // Set the message text
         messageLabel.text           = message ?? "Unable to complete request"
@@ -140,6 +146,7 @@ class GFAlertVC: UIViewController {
         ])
     }
 
+    
     @objc func dismissVC() {
         dismiss(animated: true)
     }

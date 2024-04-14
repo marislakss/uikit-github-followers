@@ -29,6 +29,7 @@ class GFUserInfoHeaderVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubviews(avatarImageView, usernameLabel, nameLabel, locationImageView, locationLabel, bioLabel)
@@ -36,6 +37,7 @@ class GFUserInfoHeaderVC: UIViewController {
         layoutUI()
         configureUIElements()
     }
+
 
     func configureUIElements() {
         avatarImageView.downloadImage(fromURL: user.avatarUrl)
@@ -50,6 +52,7 @@ class GFUserInfoHeaderVC: UIViewController {
         locationImageView.tintColor = .secondaryLabel
     }
 
+    
     func layoutUI() {
         let padding: CGFloat          = 20
         let textImagePadding: CGFloat = 12

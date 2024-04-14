@@ -26,11 +26,13 @@ class GFRepoItemVC: GFItemInfoVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureItems()
     }
+
 
     private func configureItems() {
         itemInfoViewOne.set(itemInfoType: .repos, withCount: user.publicRepos)
@@ -39,6 +41,7 @@ class GFRepoItemVC: GFItemInfoVC {
         actionButton.set(color: .systemPurple, title: "GitHub Profile", systemImageName: "person.fill")
     }
 
+    
     override func actionButtonTapped() {
         delegate.didTapGitHubProfile(for: user)
     }

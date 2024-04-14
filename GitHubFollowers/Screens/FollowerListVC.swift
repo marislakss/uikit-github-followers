@@ -34,6 +34,7 @@ class FollowerListVC: GFDataLoadingVC {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,10 +45,12 @@ class FollowerListVC: GFDataLoadingVC {
         configureDataSource()
     }
 
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
+
 
     func configureViewController() {
         view.backgroundColor = .systemBackground
@@ -58,6 +61,7 @@ class FollowerListVC: GFDataLoadingVC {
         // Add the Add (+) button to the navigation bar
         navigationItem.rightBarButtonItem = addButton
     }
+
 
     func configureCollectionView() {
         // Initialize the collectionView
@@ -72,6 +76,7 @@ class FollowerListVC: GFDataLoadingVC {
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
 
+
     func configureSearchController() {
         // Initialize the searchController
         let searchController                       = UISearchController()
@@ -84,6 +89,7 @@ class FollowerListVC: GFDataLoadingVC {
         // Set the search bar to visible
         navigationItem.hidesSearchBarWhenScrolling = false
     }
+
 
     // Call getFollowers() from the NetworkManager to fetch the followers
     func getFollowers(username: String, page: Int) {
@@ -145,6 +151,7 @@ class FollowerListVC: GFDataLoadingVC {
         self.updateData(on: self.followers)
     }
 
+
     func configureDataSource() {
         // Initialize the dataSource
         dataSource = UICollectionViewDiffableDataSource<Section, Follower>(
@@ -164,6 +171,7 @@ class FollowerListVC: GFDataLoadingVC {
         )
     }
 
+
     func updateData(on followers: [Follower]) {
         // Initialize the snapshot
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
@@ -174,6 +182,7 @@ class FollowerListVC: GFDataLoadingVC {
         // Move from Background to the main thread, to avoid warnings and apply the snapshot
         DispatchQueue.main.async { self.dataSource.apply(snapshot, animatingDifferences: true) }
     }
+
 
     @objc func addButtonTapped() {
         showLoadingView()
@@ -197,6 +206,7 @@ class FollowerListVC: GFDataLoadingVC {
                 dismissLoadingView()
             }
         }
+
 
         func addUserToFavorites(user: User) {
             let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
@@ -229,6 +239,7 @@ class FollowerListVC: GFDataLoadingVC {
 }
 
 extension FollowerListVC: UICollectionViewDelegate {
+
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate _: Bool) {
         // Get the content offset
         let offsetY       = scrollView.contentOffset.y
@@ -247,6 +258,7 @@ extension FollowerListVC: UICollectionViewDelegate {
             getFollowers(username: username, page: page)
         }
     }
+
 
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // Initialize the active array
@@ -268,6 +280,7 @@ extension FollowerListVC: UICollectionViewDelegate {
 }
 
 extension FollowerListVC: UISearchResultsUpdating {
+
     func updateSearchResults(for searchController: UISearchController) {
         // Check if the search bar is empty
         // Use guard let as text: String? { get set } is optional
@@ -286,6 +299,7 @@ extension FollowerListVC: UISearchResultsUpdating {
 }
 
 extension FollowerListVC: UserInfoVCDelegate {
+    
     func didRequestFollowers(for username: String) {
         // Get followers for that user
         self.username = username

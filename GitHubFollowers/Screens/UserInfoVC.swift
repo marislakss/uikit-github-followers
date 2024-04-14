@@ -26,6 +26,7 @@ class UserInfoVC: GFDataLoadingVC {
     var username: String!
     weak var delegate: UserInfoVCDelegate!
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,6 +36,7 @@ class UserInfoVC: GFDataLoadingVC {
         layoutUI()
         getUserInfo()
     }
+
 
     func configureViewController() {
         view.backgroundColor = .systemBackground
@@ -47,6 +49,7 @@ class UserInfoVC: GFDataLoadingVC {
         // Add the done button to the navigation bar
         navigationItem.rightBarButtonItem = doneButton
     }
+
 
     func configureScrollView() {
         // Add scrollView to the view
@@ -64,6 +67,7 @@ class UserInfoVC: GFDataLoadingVC {
             contentView.heightAnchor.constraint(equalToConstant: 600)
         ])
     }
+
 
     func getUserInfo() {
 
@@ -84,6 +88,7 @@ class UserInfoVC: GFDataLoadingVC {
             }
         }
     }
+
 
     func configureUIElements(with user: User) {
         add(childVC: GFRepoItemVC(user: user, delegate: self), to: itemViewOne)
@@ -127,6 +132,7 @@ class UserInfoVC: GFDataLoadingVC {
         ])
     }
 
+
     func add(childVC: UIViewController, to containerView: UIView) {
         addChild(childVC)
         containerView.addSubview(childVC.view)
@@ -134,9 +140,11 @@ class UserInfoVC: GFDataLoadingVC {
         childVC.didMove(toParent: self)
     }
 
+
     @objc func dismissVC() {
         dismiss(animated: true)
     }
+
 
     func configureNavigationBar() {
         if #available(iOS 15, *) {
@@ -146,6 +154,7 @@ class UserInfoVC: GFDataLoadingVC {
 }
 
 extension UserInfoVC: GFRepoItemVCDelegate {
+
     func didTapGitHubProfile(for user: User) {
         // Show Safari View Controller
         guard let url = URL(string: user.htmlUrl) else {
@@ -162,6 +171,7 @@ extension UserInfoVC: GFRepoItemVCDelegate {
 }
 
 extension UserInfoVC: GFFollowerItemVCDelegate {
+
     func didTapGetFollowers(for user: User) {
         // Tell FollowersListVC the new user
         guard user.followers != 0 else {

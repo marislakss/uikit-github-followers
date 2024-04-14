@@ -19,6 +19,7 @@ enum PersistenceManager {
     // Enum for managing UserDefaults keys
     enum Keys { static let favorites = "favorites" }
 
+
     // Static function to update favorites in UserDefaults
     static func updateWith(
         favorite: Follower,
@@ -54,6 +55,7 @@ enum PersistenceManager {
         }
     }
 
+
     // Function to retrieve favorites from UserDefaults
     static func retrieveFavorites(completed: @escaping (Result<[Follower], GFError>) -> Void) {
         guard let favoritesData = defaults.object(forKey: Keys.favorites) as? Data else {
@@ -71,6 +73,7 @@ enum PersistenceManager {
         }
     }
 
+    
     // Function to save favorites to UserDefaults
     static func save(favorites: [Follower]) -> GFError? {
         do {

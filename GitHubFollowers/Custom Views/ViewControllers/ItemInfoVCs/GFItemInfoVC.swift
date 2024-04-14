@@ -32,6 +32,7 @@ class GFItemInfoVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,10 +42,12 @@ class GFItemInfoVC: UIViewController {
         configureActionButton()
     }
 
+
     func configureBackgroundView() {
         view.layer.cornerRadius = 18
         view.backgroundColor    = .secondarySystemBackground
     }
+
 
     private func configureStackView() {
         stackView.axis         = .horizontal
@@ -54,12 +57,15 @@ class GFItemInfoVC: UIViewController {
         stackView.addArrangedSubview(itemInfoViewTwo)
     }
 
+
     private func configureActionButton() {
         actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
     }
 
+
     @objc func actionButtonTapped() {}
 
+    
     private func layoutUI() {
         view.addSubviews(stackView, actionButton)
 

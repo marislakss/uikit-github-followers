@@ -9,6 +9,7 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
     func application(
         _: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
@@ -31,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             sessionRole: connectingSceneSession.role
         )
     }
+    
 
     func application(_: UIApplication, didDiscardSceneSessions _: Set<UISceneSession>) {
         // Called when the user discards a scene session.

@@ -10,6 +10,7 @@ import UIKit
 class GFDataLoadingVC: UIViewController {
     var containerView: UIView!
 
+
     func showLoadingView() {
         // Initialize the containerView
         containerView                 = UIView(frame: view.bounds)
@@ -40,6 +41,7 @@ class GFDataLoadingVC: UIViewController {
         activityIndicator.startAnimating()
     }
 
+
     func dismissLoadingView() {
         // Go back to the main thread
         DispatchQueue.main.async {
@@ -50,6 +52,7 @@ class GFDataLoadingVC: UIViewController {
         }
     }
 
+    
     func showEmptyStateView(with message: String, in view: UIView) {
         let emptyStateView = GFEmptyStateView(message: message)
         emptyStateView.frame = view.bounds

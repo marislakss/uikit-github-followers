@@ -9,6 +9,7 @@ import UIKit
 import SafariServices
 
 extension UIViewController {
+
     // Present an alert
     func presentGFAlert(title: String, message: String, buttonTitle: String) {
         let alertVC = GFAlertVC(title: title, message: message, buttonTitle: buttonTitle)
@@ -20,6 +21,7 @@ extension UIViewController {
         present(alertVC, animated: true)
     }
 
+
     func presentDefaultError() {
         let alertVC = GFAlertVC(title: "Something went wrong",
                                 message: "Please try again",
@@ -29,6 +31,7 @@ extension UIViewController {
         present(alertVC, animated: true)
     }
 
+    
     func presentSafariVC(with url: URL) {
         let safariVC = SFSafariViewController(url: url)
         safariVC.preferredControlTintColor = .systemGreen

@@ -24,6 +24,7 @@ class GFBodyLabel: UILabel {
         self.textAlignment = textAlignment
     }
 
+    
     private func configure() {
         // Set the color
         textColor                         = .secondaryLabel

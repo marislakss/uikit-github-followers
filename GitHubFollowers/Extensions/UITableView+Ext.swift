@@ -8,6 +8,7 @@
 import UIKit
 
 extension UITableView {
+    
     // Function to remove excess empty cells by setting tableFooterView to an empty UIView
     func removeExcessCells() {
         tableFooterView = UIView(frame: .zero)

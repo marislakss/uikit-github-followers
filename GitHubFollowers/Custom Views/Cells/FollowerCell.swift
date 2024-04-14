@@ -22,11 +22,13 @@ class FollowerCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     func set(follower: Follower) {
         avatarImageView.downloadImage(fromURL: follower.avatarUrl)
         usernameLabel.text = follower.login
     }
 
+    
     private func configure() {
         addSubviews(avatarImageView, usernameLabel)
         let padding: CGFloat = 8

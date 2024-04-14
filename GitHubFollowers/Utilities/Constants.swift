@@ -42,6 +42,7 @@ enum DeviceTypes {
     static let isiPhoneXsMaxAndXr       = idiom == .phone && ScreenSize.maxLength == 896.0
     static let isiPad                   = idiom == .pad && ScreenSize.maxLength >= 1024.0
 
+    
     static func isiPhoneXAspectRatio() -> Bool {
         return isiPhoneX || isiPhoneXsMaxAndXr
     }

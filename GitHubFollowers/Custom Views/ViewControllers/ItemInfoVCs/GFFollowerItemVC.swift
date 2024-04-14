@@ -23,11 +23,13 @@ class GFFollowerItemVC: GFItemInfoVC {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureItems()
     }
+
 
     private func configureItems() {
         itemInfoViewOne.set(itemInfoType: .followers, withCount: user.followers)
@@ -36,6 +38,7 @@ class GFFollowerItemVC: GFItemInfoVC {
         actionButton.set(color: .systemGreen, title: "Get Followers", systemImageName: "person.fill.badge.plus")
     }
 
+    
     override func actionButtonTapped() {
         delegate.didTapGetFollowers(for: user)
     }

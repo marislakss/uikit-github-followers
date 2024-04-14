@@ -22,6 +22,7 @@ class GFAvatarImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     private func configure() {
         layer.cornerRadius = 10
         clipsToBounds      = true
@@ -29,6 +30,7 @@ class GFAvatarImageView: UIImageView {
         translatesAutoresizingMaskIntoConstraints = false
     }
 
+    
     func downloadImage(fromURL url: String) {
         NetworkManager.shared.downloadImage(from: url) { [weak self] image in
             guard let self else { return }

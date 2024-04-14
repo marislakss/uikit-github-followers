@@ -22,11 +22,13 @@ class FavoriteCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     func set(favorite: Follower) {
         avatarImageView.downloadImage(fromURL: favorite.avatarUrl)
         usernameLabel.text = favorite.login
     }
 
+    
     private func configure() {
         addSubviews(avatarImageView, usernameLabel)
         accessoryType = .disclosureIndicator

@@ -25,6 +25,7 @@ class GFButton: UIButton {
         set(color: color, title: title, systemImageName: systemImageName)
     }
 
+
     private func configure() {
         configuration = .tinted()
         configuration?.cornerStyle = .medium
@@ -32,6 +33,7 @@ class GFButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
     }
 
+    
     func set(color: UIColor, title: String, systemImageName: String) {
         configuration?.baseBackgroundColor = color
         configuration?.baseForegroundColor = color

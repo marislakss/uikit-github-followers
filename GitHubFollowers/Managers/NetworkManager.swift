@@ -18,6 +18,7 @@ class NetworkManager {
         decoder.dateDecodingStrategy = .iso8601
     }
     
+
     // Network Call using async/await
     func getFollowers(for username: String, page: Int) async throws -> [Follower] {
         // Create the endpoint

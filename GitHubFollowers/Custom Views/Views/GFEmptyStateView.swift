@@ -27,6 +27,7 @@ class GFEmptyStateView: UIView {
         messageLabel.text = message
     }
 
+
     private func configure() {
         // Add messageLabel & logoImageView as a subviews to the instance
         // of the GFEmptyStateView (which is a subclass of UIView)
@@ -36,6 +37,7 @@ class GFEmptyStateView: UIView {
         // Call the configureLogoImageView() method
         configureLogoImageView()
     }
+
 
     private func configureMessageLabel() {
         // Configure the message label
@@ -54,6 +56,7 @@ class GFEmptyStateView: UIView {
         ])
     }
 
+    
     private func configureLogoImageView() {
         // Configure the logo image view
         logoImageView.image = Images.emptyStateLogo
