@@ -85,41 +85,44 @@ class FollowerListVC: GFDataLoadingVC {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
+    // Call getFollowers() from the NetworkManager to fetch the followers
     func getFollowers(username: String, page: Int) {
         // Show the loading view
         showLoadingView()
         // Set isLoadingMoreFollowers to true, then proceed with the network call
         isLoadingMoreFollowers = true
 
-        // This is called 'call site' in Swift
-        NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
-                // [weak self] is a capture list used in closures to avoid strong reference cycles,
-                // also known as retain cycles.
-                // Unwrap self, as using [weak self] makes it an optional
-                guard let self else { return }
-
-                // Dismiss the loading view
-                self.dismissLoadingView()
-
-                switch result {
-                // In case success, we get an array of followers
-                case let .success(followers):
-                    // Update the UI with the followers
-                    self.updateUI(with: followers)
-
-                // In case failure, present the alert
-                case let .failure(error):
-                    self.presentGFAlertOnMainThread(
+        Task {
+            do {
+                let followers = try await NetworkManager.shared.getFollowers(for: username, page: page)
+                updateUI(with: followers)
+                dismissLoadingView()
+            } catch {
+                if let gfError = error as? GFError {
+                    presentGFAlert(
                         title: "Bad Stuff Happened",
-                        message: error.rawValue,
+                        message: gfError.rawValue,
                         buttonTitle: "OK"
                     )
+                } else {
+                    presentDefaultError()
                 }
 
-                // Set isLoadingMoreFollowers to false, as the network call has finished
-                self.isLoadingMoreFollowers = false
+                dismissLoadingView()
             }
+
+//            // Simplified version to perform network call if in no need to work with specific errors
+//            guard let followers = try? await NetworkManager.shared.getFollowers(for: username, page: page) else {
+//                presentDefaultError()
+//                dismissLoadingView()
+//                return
+//            }
+//
+//            updateUI(with: followers)
+//            dismissLoadingView()
+        }
     }
+
 
     func updateUI(with followers: [Follower]) {
         if followers.count < 100 { self.hasMoreFollowers = false }

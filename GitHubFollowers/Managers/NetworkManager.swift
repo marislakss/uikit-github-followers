@@ -11,49 +11,77 @@ class NetworkManager {
     static let shared   = NetworkManager()
     private let baseURL = "https://api.github.com/users/"
     let cache           = NSCache<NSString, UIImage>()
+    let decoder         = JSONDecoder()
 
-    private init() {}
+    private init() {
+        decoder.keyDecodingStrategy  = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
+    }
 
-    func getFollowers(
-        for username: String,
-        page: Int,
-        completed: @escaping (Result<[Follower], GFError>) -> Void
-    ) {
+//    func getFollowers(
+//        for username: String,
+//        page: Int,
+//        completed: @escaping (Result<[Follower], GFError>) -> Void
+//    ) {
+//        let endpoint = baseURL + "\(username)/followers?per_page=100&page=\(page)"
+//
+//        guard let url = URL(string: endpoint) else {
+//            completed(.failure(.invalidUsername))
+//            return
+//        }
+//
+//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//            if let _ = error {
+//                completed(.failure(.unableToComplete))
+//                return
+//            }
+//
+//            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+//                completed(.failure(.invalidResponse))
+//                return
+//            }
+//
+//            guard let data else {
+//                completed(.failure(.invalidData))
+//                return
+//            }
+//
+//            do {
+//                let decoder                 = JSONDecoder()
+//                decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                let followers               = try decoder.decode([Follower].self, from: data)
+//                completed(.success(followers))
+//            } catch {
+//                print("Error decoding User: \(error)")
+//                completed(.failure(.invalidData))
+//            }
+//        }
+//        // Start Network Call
+//        task.resume()
+//    }
+    
+    // Network Call using async/await
+    func getFollowers(for username: String, page: Int) async throws -> [Follower] {
         let endpoint = baseURL + "\(username)/followers?per_page=100&page=\(page)"
 
         guard let url = URL(string: endpoint) else {
-            completed(.failure(.invalidUsername))
-            return
+            throw GFError.invalidUsername
         }
 
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let _ = error {
-                completed(.failure(.unableToComplete))
-                return
-            }
+        // await returns a tuple with data & response which are not optionals
+        let(data, response) = try await URLSession.shared.data(from: url)
 
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completed(.failure(.invalidResponse))
-                return
-            }
-
-            guard let data else {
-                completed(.failure(.invalidData))
-                return
-            }
-
-            do {
-                let decoder                 = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let followers               = try decoder.decode([Follower].self, from: data)
-                completed(.success(followers))
-            } catch {
-                print("Error decoding User: \(error)")
-                completed(.failure(.invalidData))
-            }
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw GFError.invalidResponse
         }
-        // Start Network Call
-        task.resume()
+
+        do {
+            // Decode the data and return the array of followers
+            return try decoder.decode([Follower].self, from: data)
+        } catch {
+            // If unsuccessful, throw an error
+            throw GFError.invalidData
+        }
     }
 
     func getUserInfo(

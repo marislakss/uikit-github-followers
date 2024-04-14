@@ -33,7 +33,7 @@ class GFFollowerItemVC: GFItemInfoVC {
         itemInfoViewOne.set(itemInfoType: .followers, withCount: user.followers)
         itemInfoViewTwo.set(itemInfoType: .following, withCount: user.following)
 
-        actionButton.set(color: .systemGreen, title: "Get Followers", systemImageName: "person.3.fill")
+        actionButton.set(color: .systemGreen, title: "Get Followers", systemImageName: "person.fill.badge.plus")
     }
 
     override func actionButtonTapped() {
