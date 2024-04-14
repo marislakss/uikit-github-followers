@@ -69,40 +69,29 @@ class NetworkManager {
     }
 
 
-    func downloadImage(from urlString: String, completed: @escaping (UIImage?) -> Void) {
+    func downloadImage(from urlString: String) async -> UIImage? {
         let cacheKey = NSString(string: urlString)
         
-        // If cached image is available, return
-        if let image = cache.object(forKey: cacheKey) {
-            completed(image)
-            return
-        }
+        // If cached image is available, return image
+        if let image = cache.object(forKey: cacheKey) { return image }
 
         // If cached image is not available, do the network call to download it
-        // Create the URL
-        guard let url = URL(string: urlString) else {
-            // If url is invalid, return nil
-            completed(nil)
-            return
-        }
+        // Create the URL                      if url is invalid, return nil
+        guard let url = URL(string: urlString) else { return nil}
+        
+        do {
+            // Create the URL session
+            let (data, _) = try await URLSession.shared.data(from: url)
 
-        // Create the URL session
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let self,
-                  error == nil,
-                  let response = response as? HTTPURLResponse, response.statusCode == 200,
-                  let data = data,
-                  let image = UIImage(data: data) else {
-                completed(nil)
-                // All guard statements must include a return statement
-                return
-            }
+            // Get the image from the data, else return nil
+            guard let image = UIImage(data: data) else { return nil }
+
             // Set the image to the cache
-            self.cache.setObject(image, forKey: cacheKey)
-
-            completed(image)
+            cache.setObject(image, forKey: cacheKey)
+            // Show the image
+            return image
+        } catch {
+            return nil
         }
-        // Start the task
-        task.resume()
     }
 }
