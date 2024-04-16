@@ -119,6 +119,9 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
                 // To be safe, delete rows while on the main thread
                 DispatchQueue.main.async {
                     tableView.deleteRows(at: [indexPath], with: .left)
+                    if self.favorites.isEmpty {
+                        self.showEmptyStateView(with: "No Favorites?\nAdd one on the follower screen.", in: self.view)
+                    }
                 }
                 return
             }
