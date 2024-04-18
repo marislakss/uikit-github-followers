@@ -113,8 +113,9 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
         guard editingStyle == .delete else { return }
 
         PersistenceManager.updateWith(favorite: favorites[indexPath.row], actionType: .remove) { [weak self] error in
-            guard let self = self else { return }
-            guard let error = error else {
+            guard let self else { return }
+            
+            guard let error else {
                 self.favorites.remove(at: indexPath.row)
                 // To be safe, delete rows while on the main thread
                 DispatchQueue.main.async {

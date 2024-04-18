@@ -52,27 +52,18 @@ class GFDataLoadingVC: UIViewController {
         }
     }
 
-    
-    func showEmptyStateView(with message: String, in view: UIView) {
-        let emptyStateView = GFEmptyStateView(message: message)
-        emptyStateView.frame = view.bounds
-        // Hide the search bar when transitioning to the empty state view to
-        // provide a cleaner user interface when no followers are found.
-        navigationItem.searchController?.searchBar.isHidden = true
-        view.addSubview(emptyStateView)
-    }
 
-//    func showEmptyStateView(with message: String, in view: UIView) {
-//          view.subviews.forEach { subview in
-//            if subview is GFEmptyStateView {
-//              subview.removeFromSuperview()
-//            }
-//          }
-//            let emptyStateView = GFEmptyStateView(message: message)
-//            emptyStateView.frame = view.bounds
-//            // Hide the search bar when transitioning to the empty state view to
-//            // provide a cleaner user interface when no followers are found.
-//            navigationItem.searchController?.searchBar.isHidden = true
-//            view.addSubview(emptyStateView)
-//        }
+    func showEmptyStateView(with message: String, in view: UIView) {
+          view.subviews.forEach { subview in
+            if subview is GFEmptyStateView {
+              subview.removeFromSuperview()
+            }
+          }
+            let emptyStateView = GFEmptyStateView(message: message)
+            emptyStateView.frame = view.bounds
+            // Hide the search bar when transitioning to the empty state view to
+            // provide a cleaner user interface when no followers are found.
+            navigationItem.searchController?.searchBar.isHidden = true
+            view.addSubview(emptyStateView)
+        }
 }
