@@ -52,6 +52,25 @@ class FollowerListVC: GFDataLoadingVC {
     }
 
 
+    // New function for default empty state view
+    override func updateContentUnavailableConfiguration(using state: UIContentUnavailableConfigurationState) {
+        // If you don't have any followers, show the empty state view
+        if followers.isEmpty && !isLoadingMoreFollowers {
+            var config = UIContentUnavailableConfiguration.empty()
+            config.image = .init(systemName: "person.slash.fill")
+            config.text = "No Followers"
+            config.secondaryText = "This user has no Followers. Go follow them!"
+            contentUnavailableConfiguration = config
+        } else if isSearching && filteredFollowers.isEmpty {
+            //
+            contentUnavailableConfiguration = UIContentUnavailableConfiguration.search()
+        } else {
+            // If you have followers, don't show the empty state view
+            contentUnavailableConfiguration = nil
+        }
+    }
+
+
     func configureViewController() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -136,20 +155,8 @@ class FollowerListVC: GFDataLoadingVC {
     func updateUI(with followers: [Follower]) {
         if followers.count < 100 { self.hasMoreFollowers = false }
         self.followers.append(contentsOf: followers)
-
-        // In case the user doesn't have any followers, show the empty state view
-        if self.followers.isEmpty {
-            let message = "This user doesn't have any followers. Go follow them!"
-            // When presenting a view, remember to switch to main thread
-            // Reason is that this is done on background thread by default
-            DispatchQueue.main.async {
-                self.showEmptyStateView(with: message, in: self.view)
-            }
-
-            return
-        }
-
         self.updateData(on: self.followers)
+        setNeedsUpdateContentUnavailableConfiguration()
     }
 
 
@@ -296,6 +303,7 @@ extension FollowerListVC: UISearchResultsUpdating {
         filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
         // Update the data
         updateData(on: filteredFollowers)
+        setNeedsUpdateContentUnavailableConfiguration()
     }
 }
 

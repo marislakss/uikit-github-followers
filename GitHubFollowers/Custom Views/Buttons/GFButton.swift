@@ -44,3 +44,8 @@ class GFButton: UIButton {
         configuration?.imagePlacement = .leading
     }
 }
+
+// Use this #Preview macro syntax to preview the button in the canvas
+#Preview {
+    return GFButton(color: .blue, title: "Test Button", systemImageName: "pencil.circle.fill")
+}

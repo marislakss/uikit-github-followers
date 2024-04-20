@@ -64,7 +64,7 @@ class SearchVC: UIViewController {
         view.endEditing(true)
 
         let followerListVC = FollowerListVC(username: usernameTextField.text!)
-        // Push the view controller
+        // Push the view controller to the navigation stack
         navigationController?.pushViewController(followerListVC, animated: true)
     }
 
@@ -119,10 +119,14 @@ class SearchVC: UIViewController {
 }
 
 extension SearchVC: UITextFieldDelegate {
-    
     // This method is called when the user taps the return button on the keyboard
     func textFieldShouldReturn(_: UITextField) -> Bool {
         pushFollowerListVC()
         return true
     }
 }
+
+// MARK: - Preview
+
+// Use this #Preview macro syntax to preview the view controller live in the canvas
+#Preview { SearchVC() }

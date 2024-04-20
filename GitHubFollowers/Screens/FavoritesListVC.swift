@@ -28,6 +28,21 @@ class FavoritesListVC: GFDataLoadingVC {
         getFavorites()
     }
 
+    // New function for default empty state view 
+    override func updateContentUnavailableConfiguration(using state: UIContentUnavailableConfigurationState) {
+        // If you don't have any favorites, show the content unavailable view
+        if favorites.isEmpty {
+            var config = UIContentUnavailableConfiguration.empty()
+            config.image = .init(systemName: "star.fill")
+            config.text = "No Favorites"
+            config.secondaryText = "Add a Favorite on the follower screen."
+            contentUnavailableConfiguration = config
+        } else {
+            // If you have favorites, don't show the content unavailable view
+            contentUnavailableConfiguration = nil
+        }
+    }
+
 
     func configureViewController() {
         view.backgroundColor = .systemBackground
@@ -71,17 +86,11 @@ class FavoritesListVC: GFDataLoadingVC {
 
 
     func updateUI(with favorites: [Follower]) {
-        if favorites.isEmpty {
-            self.showEmptyStateView(
-                with: "No Favorites?\nAdd one on the follower screen.",
-                in: self.view
-            )
-        } else {
-            self.favorites = favorites
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.view.bringSubviewToFront(self.tableView)
-            }
+        self.favorites = favorites
+        setNeedsUpdateContentUnavailableConfiguration()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.view.bringSubviewToFront(self.tableView)
         }
     }
 }
@@ -120,19 +129,13 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
                 // To be safe, delete rows while on the main thread
                 DispatchQueue.main.async {
                     tableView.deleteRows(at: [indexPath], with: .left)
-                    if self.favorites.isEmpty {
-                        self.showEmptyStateView(with: "No Favorites?\nAdd one on the follower screen.", in: self.view)
-                    }
+                    self.setNeedsUpdateContentUnavailableConfiguration()
                 }
                 return
             }
             
             DispatchQueue.main.async {
-                self.presentGFAlert(
-                    title: "Unable to remove",
-                    message: error.rawValue,
-                    buttonTitle: "OK"
-                )
+                self.presentGFAlert(title: "Unable to remove", message: error.rawValue, buttonTitle: "OK")
             }
         }
     }
