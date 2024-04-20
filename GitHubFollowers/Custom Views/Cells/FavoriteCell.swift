@@ -7,10 +7,19 @@
 
 import UIKit
 
+// MARK: - FavoriteCell Class
+
+// FavoriteCell is a subclass of UITableViewCell, it's a custom cell
+// used for displaying favorite user data.
 class FavoriteCell: UITableViewCell {
+
+    // MARK: - Properties
+    
     static let reuseID  = "FavoriteCell"
     let avatarImageView = GFAvatarImageView(frame: .zero)
     let usernameLabel   = GFTitleLabel(textAlignment: .left, fontSize: 26)
+
+    // MARK: - Initialization
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -22,12 +31,14 @@ class FavoriteCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Set Methods
 
     func set(favorite: Follower) {
         avatarImageView.downloadImage(fromURL: favorite.avatarUrl)
         usernameLabel.text = favorite.login
     }
 
+    // MARK: - Configuration
     
     private func configure() {
         addSubviews(avatarImageView, usernameLabel)

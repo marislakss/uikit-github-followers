@@ -7,9 +7,18 @@
 
 import UIKit
 
+// MARK: - GFAvatarImageView Class
+
+// GFAvatarImageView is a subclass of UIImageView, it's a custom ImageView used for
+// displaying avatar images throughout the app.
 class GFAvatarImageView: UIImageView {
+
+    // MARK: - Properties
+
     let cache            = NetworkManager.shared.cache
     let placeholderImage = Images.placeholder
+
+    // MARK: - Initialization
 
     // Override the designated init to call the configure method
     override init(frame: CGRect) {
@@ -22,6 +31,7 @@ class GFAvatarImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Configuration
 
     private func configure() {
         layer.cornerRadius = 10
@@ -30,7 +40,8 @@ class GFAvatarImageView: UIImageView {
         translatesAutoresizingMaskIntoConstraints = false
     }
 
-    
+    // MARK: - Network Calls
+
     func downloadImage(fromURL url: String) {
         Task { image = await NetworkManager.shared.downloadImage(from: url) ?? placeholderImage }
     }

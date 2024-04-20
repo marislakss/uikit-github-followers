@@ -7,6 +7,9 @@
 
 import Foundation
 
+// MARK: - User Model
+
+// Represents a GitHub user, conforming to Codable for serialization and Hashable for use in collections.
 struct User: Codable, Hashable {
     let login: String
     let avatarUrl: String

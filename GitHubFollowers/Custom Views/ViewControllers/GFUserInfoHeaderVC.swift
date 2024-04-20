@@ -7,7 +7,14 @@
 
 import UIKit
 
+// MARK: - GFUserInfoHeaderVC Class
+
+// GFUserInfoHeaderVC is a subclass of UIViewController.
+// It presents user information at the top of the user profile screen.
 class GFUserInfoHeaderVC: UIViewController {
+
+    // MARK: - Properties
+    
     let avatarImageView   = GFAvatarImageView(frame: .zero)
     let usernameLabel     = GFTitleLabel(textAlignment: .left, fontSize: 34)
     let nameLabel         = GFSecondaryTitleLabel(fontSize: 18)
@@ -16,6 +23,8 @@ class GFUserInfoHeaderVC: UIViewController {
     let bioLabel          = GFBodyLabel(textAlignment: .left)
 
     var user: User!
+    
+    // MARK: - Initialization
 
     // Custom initializer
     init(user: User) {
@@ -29,6 +38,7 @@ class GFUserInfoHeaderVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +48,7 @@ class GFUserInfoHeaderVC: UIViewController {
         configureUIElements()
     }
 
+    // MARK: - Configuration
 
     func configureUIElements() {
         avatarImageView.downloadImage(fromURL: user.avatarUrl)
@@ -52,6 +63,7 @@ class GFUserInfoHeaderVC: UIViewController {
         locationImageView.tintColor = .secondaryLabel
     }
 
+    // MARK: - Layout
     
     func layoutUI() {
         let padding: CGFloat          = 20

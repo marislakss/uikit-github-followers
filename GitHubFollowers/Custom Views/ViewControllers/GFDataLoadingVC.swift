@@ -7,9 +7,17 @@
 
 import UIKit
 
+// MARK: - GFDataLoadingVC Class
+
+// GFDataLoadingVC is a subclass of UIViewController. It's responsible for presenting and
+// dismissing loading and empty state views.
 class GFDataLoadingVC: UIViewController {
+
+    // MARK: - Properties
+
     var containerView: UIView!
 
+    // MARK: - Show Loading
 
     func showLoadingView() {
         // Initialize the containerView
@@ -27,11 +35,10 @@ class GFDataLoadingVC: UIViewController {
         // Add the activity indicator
 
         let activityIndicator = UIActivityIndicatorView(style: .large)
-        containerView.addSubview(activityIndicator)
+        containerView.addSubview(activityIndicator) // Add the activity indicator
 
-        // Center the activity indicator
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-
+        // Center the activity indicator
         NSLayoutConstraint.activate([
             activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
@@ -41,6 +48,7 @@ class GFDataLoadingVC: UIViewController {
         activityIndicator.startAnimating()
     }
 
+    // MARK: - Dismiss Loading
 
     func dismissLoadingView() {
         // Go back to the main thread
@@ -52,6 +60,7 @@ class GFDataLoadingVC: UIViewController {
         }
     }
 
+    // MARK: - Show Empty State
 
     func showEmptyStateView(with message: String, in view: UIView) {
           view.subviews.forEach { subview in

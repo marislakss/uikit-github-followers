@@ -7,8 +7,18 @@
 
 import SwiftUI
 
+// MARK: - FollowerView Struct
+
+// FollowerView is a struct conforming to the View protocol,
+// it's a custom view used for displaying follower data.
 struct FollowerView: View {
+
+    // MARK: - Properties
+
+    // The Follower data model containing user details
     var follower: Follower
+
+    // MARK: - Body
 
     var body: some View {
         VStack {
@@ -32,6 +42,9 @@ struct FollowerView: View {
     }
 }
 
+// MARK: - Canvas Preview
+
+// Preview provider to visualize the view in SwiftUI's preview canvas
 #Preview {
     FollowerView(follower: Follower(login: "Username", avatarUrl: ""))
 }

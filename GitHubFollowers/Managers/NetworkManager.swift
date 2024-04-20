@@ -7,7 +7,13 @@
 
 import UIKit
 
+// MARK: - NetworkManager Class
+
+// The NetworkManager is a singleton class that handles all network requests for the GitHubFollowers app.
 class NetworkManager {
+
+    // MARK: - Properties
+
     static let shared   = NetworkManager()
     private let baseURL = "https://api.github.com/users/"
     let cache           = NSCache<NSString, UIImage>()
@@ -18,13 +24,14 @@ class NetworkManager {
         decoder.dateDecodingStrategy = .iso8601
     }
     
+    // MARK: - Network Calls
 
-    // Network Call using async/await
+    // Fetches followers for a specific GitHub user asynchronously.
     func getFollowers(for username: String, page: Int) async throws -> [Follower] {
-        // Create the endpoint
+        // Create the endpoint.
         let endpoint  = baseURL + "\(username)/followers?per_page=100&page=\(page)"
         
-        // Check if the endpoint is valid, if that fails throw an error
+        // Check if the endpoint is valid, if that fails throw an error.
         guard let url = URL(string: endpoint) else {
             throw GFError.invalidUsername
         }
@@ -48,6 +55,7 @@ class NetworkManager {
     }
 
 
+    // Fetches detailed user information asynchronously.
     func getUserInfo(for username: String) async throws -> User {
         let endpoint  = baseURL + "\(username)"
 
@@ -68,7 +76,8 @@ class NetworkManager {
         }
     }
 
-
+    
+    // Downloads an image asynchronously from a URL string
     func downloadImage(from urlString: String) async -> UIImage? {
         let cacheKey = NSString(string: urlString)
         

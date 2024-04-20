@@ -7,11 +7,16 @@
 
 import UIKit
 
+// MARK: - FavoritesListVC Class
 // FavoritesListVC is a subclass of GFDataLoadingVC superclass
 class FavoritesListVC: GFDataLoadingVC {
+
+    // MARK: - Properties
+
     let tableView             = UITableView()
     var favorites: [Follower] = []
 
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +33,11 @@ class FavoritesListVC: GFDataLoadingVC {
         getFavorites()
     }
 
-    // New function for default empty state view 
+    // MARK: - Configuration Methods
+
+    // New function for default empty state view.
     override func updateContentUnavailableConfiguration(using state: UIContentUnavailableConfigurationState) {
-        // If you don't have any favorites, show the content unavailable view
+        // If you don't have any favorites, show the content unavailable view.
         if favorites.isEmpty {
             var config = UIContentUnavailableConfiguration.empty()
             config.image = .init(systemName: "star.fill")
@@ -38,7 +45,7 @@ class FavoritesListVC: GFDataLoadingVC {
             config.secondaryText = "Add a Favorite on the follower screen."
             contentUnavailableConfiguration = config
         } else {
-            // If you have favorites, don't show the content unavailable view
+            // If you have favorites, don't show the content unavailable view.
             contentUnavailableConfiguration = nil
         }
     }
@@ -95,6 +102,8 @@ class FavoritesListVC: GFDataLoadingVC {
     }
 }
 
+// MARK: - FavoritesListVC Extension
+
 extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -126,7 +135,7 @@ extension FavoritesListVC: UITableViewDelegate, UITableViewDataSource {
             
             guard let error else {
                 self.favorites.remove(at: indexPath.row)
-                // To be safe, delete rows while on the main thread
+                // To be safe, delete rows while on the main thread.
                 DispatchQueue.main.async {
                     tableView.deleteRows(at: [indexPath], with: .left)
                     self.setNeedsUpdateContentUnavailableConfiguration()

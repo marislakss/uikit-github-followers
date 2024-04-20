@@ -7,10 +7,17 @@
 
 import UIKit
 
+// MARK: - FollowerListVC Class
+
 // FollowerListVC is a subclass of GFDataLoadingVC superclass
 class FollowerListVC: GFDataLoadingVC {
+
+    // MARK: - Section Enum
+
     // Enums are hashable by default
     enum Section { case main }
+
+    // MARK: - Properties
 
     var username: String!
     var followers: [Follower]         = []
@@ -23,6 +30,8 @@ class FollowerListVC: GFDataLoadingVC {
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
 
+    // MARK: - Initialization
+
     init(username: String) {
         super.init(nibName: nil, bundle: nil)
         self.username = username
@@ -34,6 +43,7 @@ class FollowerListVC: GFDataLoadingVC {
         fatalError("init(coder:) has not been implemented")
     }
 
+// MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +61,7 @@ class FollowerListVC: GFDataLoadingVC {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
+    // MARK: - Configuration Methods
 
     // New function for default empty state view
     override func updateContentUnavailableConfiguration(using state: UIContentUnavailableConfigurationState) {
@@ -109,6 +120,7 @@ class FollowerListVC: GFDataLoadingVC {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
 
+    // MARK: - Networking
 
     // Call getFollowers() from the NetworkManager to fetch the followers
     func getFollowers(username: String, page: Int) {
@@ -191,6 +203,7 @@ class FollowerListVC: GFDataLoadingVC {
         DispatchQueue.main.async { self.dataSource.apply(snapshot, animatingDifferences: true) }
     }
 
+    // MARK: - Actions
 
     @objc func addButtonTapped() {
         showLoadingView()
@@ -246,8 +259,11 @@ class FollowerListVC: GFDataLoadingVC {
     }
 }
 
-extension FollowerListVC: UICollectionViewDelegate {
+// MARK: - UICollectionViewDelegate Extension
 
+extension FollowerListVC: UICollectionViewDelegate {
+    
+    // Implementation for handling scroll events
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate _: Bool) {
         // Get the content offset
         let offsetY       = scrollView.contentOffset.y
@@ -268,6 +284,7 @@ extension FollowerListVC: UICollectionViewDelegate {
     }
 
 
+    // Implementation for handling item selection.
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // Initialize the active array
         //                    W (What)  ?    T (True)       : F (False)
@@ -287,8 +304,11 @@ extension FollowerListVC: UICollectionViewDelegate {
     }
 }
 
-extension FollowerListVC: UISearchResultsUpdating {
+// MARK: - UISearchResultsUpdating Extension
 
+extension FollowerListVC: UISearchResultsUpdating {
+    
+    // Implementation for updating search results.
     func updateSearchResults(for searchController: UISearchController) {
         // Check if the search bar is empty
         // Use guard let as text: String? { get set } is optional
@@ -307,10 +327,12 @@ extension FollowerListVC: UISearchResultsUpdating {
     }
 }
 
+// MARK: - UserInfoVCDelegate Extension
+
 extension FollowerListVC: UserInfoVCDelegate {
     
+    // Implementation for delegating follower requests.
     func didRequestFollowers(for username: String) {
-        // Get followers for that user
         self.username = username
         title         = username
         page          = 1

@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - UITableView Extension
+
 extension UITableView {
     
     // Function to remove excess empty cells by setting tableFooterView to an empty UIView

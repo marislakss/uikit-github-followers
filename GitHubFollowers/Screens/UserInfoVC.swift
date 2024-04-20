@@ -7,12 +7,20 @@
 
 import UIKit
 
+// MARK: - UserInfoVCDelegate Protocol
+
 protocol UserInfoVCDelegate: AnyObject {
     func didRequestFollowers(for username: String)
 }
 
-// UserInfoVC is a subclass of GFDataLoadingVC superclass
+// MARK: - UserInfoVC Class
+
+// UserInfoVC is a subclass of GFDataLoadingVC superclass.
+// UserInfoVC displays detailed user information and handles user interactions for GitHub profiles.
 class UserInfoVC: GFDataLoadingVC {
+
+    // MARK: - Properties
+
     // Create the scrollView and contentView programatically
     let scrollView          = UIScrollView()
     let contentView         = UIView()
@@ -26,6 +34,7 @@ class UserInfoVC: GFDataLoadingVC {
     var username: String!
     weak var delegate: UserInfoVCDelegate!
 
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +46,7 @@ class UserInfoVC: GFDataLoadingVC {
         getUserInfo()
     }
 
+    // MARK: - Configuration Methods
 
     func configureViewController() {
         view.backgroundColor = .systemBackground
@@ -68,6 +78,7 @@ class UserInfoVC: GFDataLoadingVC {
         ])
     }
 
+// MARK: - Network Calls
 
     func getUserInfo() {
 
@@ -89,6 +100,7 @@ class UserInfoVC: GFDataLoadingVC {
         }
     }
 
+    // MARK: - UI Methods
 
     func configureUIElements(with user: User) {
         add(childVC: GFRepoItemVC(user: user, delegate: self), to: itemViewOne)
@@ -96,6 +108,7 @@ class UserInfoVC: GFDataLoadingVC {
         add(childVC: GFUserInfoHeaderVC(user: user), to: headerView)
         dateLabel.text = "On GitHub since \(user.createdAt.convertToMonthYearFormat())"
     }
+
 
     func layoutUI() {
         let padding: CGFloat    = 20
@@ -140,18 +153,22 @@ class UserInfoVC: GFDataLoadingVC {
         childVC.didMove(toParent: self)
     }
 
+    // MARK: - User Interaction
 
     @objc func dismissVC() {
         dismiss(animated: true)
     }
 
-
+    // MARK: - iOS 15 Navigation Bar Configuration
+    
     func configureNavigationBar() {
         if #available(iOS 15, *) {
             navigationController?.navigationBar.scrollEdgeAppearance = UINavigationBarAppearance()
         }
     }
 }
+
+// MARK: - GFRepoItemVCDelegate Extension
 
 extension UserInfoVC: GFRepoItemVCDelegate {
 
@@ -169,6 +186,8 @@ extension UserInfoVC: GFRepoItemVCDelegate {
         presentSafariVC(with: url)
     }
 }
+
+// MARK: - GFFollowerItemVCDelegate Extension
 
 extension UserInfoVC: GFFollowerItemVCDelegate {
 

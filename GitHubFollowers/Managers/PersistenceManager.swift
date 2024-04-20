@@ -7,20 +7,30 @@
 
 import Foundation
 
-// Enum for adding or removing a favorite
+// MARK: - PersistenceActionType Enum
+
+// Defines the types of persistence actions that can be performed.
 enum PersistenceActionType {
     case add, remove
 }
 
-// Enum for managing UserDefaults
+// MARK: - PersistenceManager Enum
+
+// Manages persistence of favorite followers using UserDefaults.
 enum PersistenceManager {
+
+    // MARK: - Properties
+
     private static let defaults = UserDefaults.standard
 
-    // Enum for managing UserDefaults keys
+    // MARK: - Keys Enum
+
+    // Stores UserDefaults keys to avoid hard-coded strings throughout the app.
     enum Keys { static let favorites = "favorites" }
 
+    // MARK: - Update Favorites
 
-    // Static function to update favorites in UserDefaults
+    // Updates the list of favorite followers in UserDefaults based on the action type.
     static func updateWith(
         favorite: Follower,
         actionType: PersistenceActionType,
@@ -33,12 +43,12 @@ enum PersistenceManager {
 
                 switch actionType {
                 case .add:
-                    // Check if the favorite is already in the list
+                    // Check if the favorite is already in the list.
                     guard !favorites.contains(favorite) else {
                         completed(.alreadyInFavorites)
                         return
                     }
-                    // If not, add the favorite to the list
+                    // If not, add the favorite to the list.
                     favorites.append(favorite)
 
                 case .remove:
@@ -55,8 +65,9 @@ enum PersistenceManager {
         }
     }
 
+    // MARK: - Retrieve Favorites
 
-    // Function to retrieve favorites from UserDefaults
+    // Retrieves the list of favorite followers from UserDefaults.
     static func retrieveFavorites(completed: @escaping (Result<[Follower], GFError>) -> Void) {
         guard let favoritesData = defaults.object(forKey: Keys.favorites) as? Data else {
             completed(.success([]))
@@ -73,8 +84,9 @@ enum PersistenceManager {
         }
     }
 
-    
-    // Function to save favorites to UserDefaults
+    // MARK: - Save Favorites
+
+    // Saves the list of favorite followers to UserDefaults.
     static func save(favorites: [Follower]) -> GFError? {
         do {
             // When saving data to UserDefaults, we need to encode it.

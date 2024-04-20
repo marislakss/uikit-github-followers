@@ -7,9 +7,17 @@
 
 import UIKit
 
+// MARK: - GFEmptyStateView Class
+
+// GFEmptyStateView is a subclass of UIView, it's a custom View used for presenting empty state screens.
 class GFEmptyStateView: UIView {
+
+    // MARK: - Properties
+    
     let messageLabel  = GFTitleLabel(textAlignment: .center, fontSize: 28)
     let logoImageView = UIImageView()
+
+    // MARK: - Initialization
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,7 +35,8 @@ class GFEmptyStateView: UIView {
         messageLabel.text = message
     }
 
-
+    // MARK: - Configuration
+    
     private func configure() {
         // Add messageLabel & logoImageView as a subviews to the instance
         // of the GFEmptyStateView (which is a subclass of UIView)

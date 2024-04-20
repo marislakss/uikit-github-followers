@@ -7,7 +7,13 @@
 
 import UIKit
 
+// MARK: - GFAlertVC Class
+
+// GFAlertVC is a subclass of UIViewController, it presents an alert to the user.
 class GFAlertVC: UIViewController {
+
+    // MARK: - Properties
+    
     let containerView   = GFAlertContainerView()
     let titleLabel      = GFTitleLabel(textAlignment: .center, fontSize: 20)
     let messageLabel    = GFBodyLabel(textAlignment: .center)
@@ -26,15 +32,13 @@ class GFAlertVC: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    // MARK: - Initialization
 
-    // Custom initializer
     init(title: String, message: String, buttonTitle: String) {
         super.init(nibName: nil, bundle: nil)
-        // Set the title
         alertTitle          = title
-        // Set the message
         self.message        = message
-        // Set the button title
         self.buttonTitle    = buttonTitle
     }
 
@@ -43,6 +47,7 @@ class GFAlertVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +63,7 @@ class GFAlertVC: UIViewController {
         configureMessageLabel()
     }
 
+    // MARK: - Configuration
 
     func configureContainerView() {
         // Add constraints
@@ -146,6 +152,7 @@ class GFAlertVC: UIViewController {
         ])
     }
 
+    // MARK: - Actions
     
     @objc func dismissVC() {
         dismiss(animated: true)

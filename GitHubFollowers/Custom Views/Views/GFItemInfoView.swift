@@ -7,18 +7,27 @@
 
 import UIKit
 
+// MARK: - ItemInfoType Enumeration
+
 enum ItemInfoType {
     case repos, gists, followers, following
 }
 
+// MARK: - GFItemInfoView Class
 
 class GFItemInfoView: UIView {
+
+    // MARK: - Properties
+
     let symbolImageView = UIImageView()
     let titleLabel      = GFTitleLabel(textAlignment: .left, fontSize: 14)
     let countLabel      = GFTitleLabel(textAlignment: .center, fontSize: 14)
 
+    // MARK: - Initialization
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        // Configure the view and its subviews
         configure()
     }
 
@@ -27,14 +36,17 @@ class GFItemInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Configuration
 
     private func configure() {
+        // Add subviews to the view
         addSubviews(symbolImageView, titleLabel, countLabel)
 
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFill
         symbolImageView.tintColor   = .label
 
+        // Layout constraints for subviews
         NSLayoutConstraint.activate([
             symbolImageView.topAnchor.constraint(equalTo: self.topAnchor),
             symbolImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -53,8 +65,10 @@ class GFItemInfoView: UIView {
         ])
     }
 
-    
+    // MARK: - Set Item Information
+
     func set(itemInfoType: ItemInfoType, withCount count: Int) {
+        // Configure the view based on the type and count of items
         switch itemInfoType {
         case .repos:
             symbolImageView.image = SFSymbols.repos
@@ -69,7 +83,8 @@ class GFItemInfoView: UIView {
             symbolImageView.image = SFSymbols.following
             titleLabel.text       = "Following"
         }
-
+        
+        // Set the count label
         countLabel.text           = String(count)
     }
 }

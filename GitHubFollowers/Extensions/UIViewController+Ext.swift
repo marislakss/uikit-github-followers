@@ -8,9 +8,14 @@
 import UIKit
 import SafariServices
 
+// MARK: - UIViewController Extension
+
+// This extension adds additional functionality to UIViewController for 
+// presenting customized alerts and Safari web views.
 extension UIViewController {
 
-    // Present an alert
+    // MARK: - Alert Presentation
+
     func presentGFAlert(title: String, message: String, buttonTitle: String) {
         let alertVC = GFAlertVC(title: title, message: message, buttonTitle: buttonTitle)
         // Set the presentation style
@@ -21,7 +26,7 @@ extension UIViewController {
         present(alertVC, animated: true)
     }
 
-
+    // Presents a default error alert with a standard message.
     func presentDefaultError() {
         let alertVC = GFAlertVC(title: "Something went wrong",
                                 message: "Please try again",
@@ -31,7 +36,9 @@ extension UIViewController {
         present(alertVC, animated: true)
     }
 
-    
+    // MARK: - Safari Web View Presentation
+
+    // Presents a SafariViewController with the specified URL.
     func presentSafariVC(with url: URL) {
         let safariVC = SFSafariViewController(url: url)
         safariVC.preferredControlTintColor = .systemGreen

@@ -7,18 +7,12 @@
 
 import Foundation
 
-extension Date {
-    
-//    // This function will convert the date to a string,
-//    func convertToMonthYearFormat() -> String {
-//        // Create a date formatter
-//        let dateFormatter = DateFormatter()
-//        // Set the date format
-//        dateFormatter.dateFormat = "MMM yyyy"
-//        // Return the date
-//        return dateFormatter.string(from: self)
-//    }
+// MARK: - Date Extension
 
-    // New iOS 15 way to format date
+// This extension enhances the Date class by adding a method to format
+// dates into a month and year string.
+extension Date {
+
+    // New iOS 15 syntax to format date
     func convertToMonthYearFormat() -> String { formatted(.dateTime.month().year()) }
 }

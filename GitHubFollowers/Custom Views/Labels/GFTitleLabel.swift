@@ -7,13 +7,20 @@
 
 import UIKit
 
+// MARK: - GFTitleLabel Class
+
+// GFTitleLabel is a subclass of UILabel, providing a reusable styled label for the application.
 class GFTitleLabel: UILabel {
-    // Designated (custom) initializer
+
+    // MARK: - Initialization
+
+    // This initializer is used when creating a GFTitleLabel programmatically.
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-
+    
+    // This initializer is used when creating a GFTitleLabel from a storyboard.
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -28,7 +35,9 @@ class GFTitleLabel: UILabel {
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
     }
 
+    // MARK: - Configuration
 
+    // This method configures the default properties for the GFTitleLabel.
     private func configure() {
         // Set the color
         textColor                 = .label

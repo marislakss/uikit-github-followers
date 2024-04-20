@@ -7,7 +7,13 @@
 
 import UIKit
 
+// MARK: - GFTextField Class
+
+// GFTextField is a subclass of UITextField, it's a custom TextField used throughout the app.
 class GFTextField: UITextField {
+
+    // MARK: - Initialization
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -18,7 +24,8 @@ class GFTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
 
-
+    // MARK: - Configuration
+    
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
 

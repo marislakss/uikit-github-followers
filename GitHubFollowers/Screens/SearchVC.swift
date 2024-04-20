@@ -7,7 +7,12 @@
 
 import UIKit
 
+// MARK: - SearchVC Class
+
 class SearchVC: UIViewController {
+
+    // MARK: - Properties
+
     let logoImageView      = UIImageView()
     let usernameTextField  = GFTextField()
     let callToActionButton = GFButton(color: .systemGreen, title: "Get Followers", systemImageName: "person.3.fill")
@@ -18,6 +23,7 @@ class SearchVC: UIViewController {
         !usernameTextField.text!.isEmpty
     }
 
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +47,7 @@ class SearchVC: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
+    // MARK: - Configuration Methods
 
     func createDismissKeyboardTapGesture() {
         // Create a tap gesture recognizer
@@ -118,8 +125,11 @@ class SearchVC: UIViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate Extension
+
+// Manages keyboard interactions, pushing the FollowerListVC upon return.
 extension SearchVC: UITextFieldDelegate {
-    // This method is called when the user taps the return button on the keyboard
+    // This method is called when the user taps the return button on the keyboard.
     func textFieldShouldReturn(_: UITextField) -> Bool {
         pushFollowerListVC()
         return true
@@ -128,5 +138,5 @@ extension SearchVC: UITextFieldDelegate {
 
 // MARK: - Preview
 
-// Use this #Preview macro syntax to preview the view controller live in the canvas
+// Use this #Preview macro syntax to preview the view controller live in the canvas.
 #Preview { SearchVC() }
