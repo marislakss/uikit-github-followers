@@ -17,7 +17,7 @@ struct FollowerView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             } placeholder: {
-                Image("avatar-placeholder")
+                Image(.avatarPlaceholder)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
@@ -32,8 +32,6 @@ struct FollowerView: View {
     }
 }
 
-struct FollowerView_Previews: PreviewProvider {
-    static var previews: some View {
-        FollowerView(follower: Follower(login: "Username", avatarUrl: ""))
-    }
+#Preview {
+    FollowerView(follower: Follower(login: "Username", avatarUrl: ""))
 }

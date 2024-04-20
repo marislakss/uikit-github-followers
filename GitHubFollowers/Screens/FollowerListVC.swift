@@ -219,7 +219,7 @@ class FollowerListVC: GFDataLoadingVC {
                     DispatchQueue.main.async {
                         self.presentGFAlert(
                             title: "Success!",
-                            message: "User added to Favorites!",
+                            message: "User added to Favorites.",
                             buttonTitle: "OK"
                         )
                     }

@@ -21,7 +21,7 @@ class GFAlertVC: UIViewController {
 
     // Add Blur Effect View
     let blurEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
